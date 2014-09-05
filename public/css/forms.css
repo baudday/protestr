@@ -1,0 +1,33 @@
+.navbar-default .navbar-brand {
+  font-family: 'Lobster', cursive;
+  color: #a94442;
+}
+
+.input-error {
+  width: 100%;
+  border: 1px solid #a94442;
+  border-top: none;
+  border-radius: 5px;
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+  padding: 2px;
+  padding-left: 12px;
+  color: #a94442;
+  background: #e5c6c6;
+}
+
+.has-error .form-control,
+body > div.container > div >
+  div > form >
+  div.input-group.input-group-lg.has-error >
+  span > button {
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+body > div.container > div > div > form >
+  div.input-group.input-group-lg.has-error >
+  span > button {
+    border-color: #a94442;
+}
+

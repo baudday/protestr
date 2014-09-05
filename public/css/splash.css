@@ -1,0 +1,52 @@
+html, body {
+  /*background: url('../img/bandana.png')
+    no-repeat center center fixed;*/
+  -webkit-background-size: cover;  
+  -moz-background-size: cover;  
+  -o-background-size: cover;  
+  background-size: cover;  
+  -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='http://media02.hongkiat.com/oversized-background-image-design/bg.jpg', sizingMethod='scale')";  
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='.http://media02.hongkiat.com/oversized-background-image-design/bg.jpg', sizingMethod='scale');
+  height: 100%;
+  font-family: 'Open Sans', 'sans-serif';
+  font-weight: lighter;
+}
+
+.overlay {
+  content:'\A';
+  position:absolute;
+  width:100%; height:100%;
+  top:0; left:0;
+  background:rgba(0,0,0,0.6);
+  opacity:100;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+}
+
+.title {
+  text-align: center;
+}
+
+.title h1 {
+  font-family: 'Lobster', 'cursive';
+  font-size: 350%;
+  color: #a94442;
+}
+
+.title p {
+  font-size: 150%;
+  color: white;
+}
+ 
+.container {
+  height:100%;
+  display:table;
+  margin-top: -46px;
+  padding: 0;
+}
+ 
+.row {
+  height: 100%;
+  display:table-cell;
+  vertical-align: middle;
+}
