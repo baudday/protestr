@@ -5,7 +5,8 @@ function splash_background()
     $images = [
         'crowd',
         'bandana',
-        'mic'
+        'mic',
+        'candles',
     ];
 
     $img = $images[array_rand($images)];
