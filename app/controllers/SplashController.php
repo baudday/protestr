@@ -67,7 +67,7 @@ class SplashController extends \BaseController {
 	{
 		$message = [
 			'class' => 'success',
-			'message' => '<strong>Thanks!</strong> We\'ll be sure to keep you in the loop!'
+			'message' => '<strong>Almost finished!</strong> To confirm your subscription, please click the link in the email we just sent you.'
 		];
 		return View::make('pages.splash', compact('message'));
 	}
