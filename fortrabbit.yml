@@ -3,16 +3,4 @@ composer:
   mode: always
   method: install
 post-deploy:
-  script: artisan
-  args:
-    - migrate
-  script: artisan
-  args:
-    - asset:publish
-    - --path="vendor/twbs/bootstrap/dist/"
-    - bootstrap
-  script: artisan
-  args:
-    - asset:publish
-    - --path="vendor/components/jquery/"
-    - jquery
+  script: post-deploy.php
