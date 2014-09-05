@@ -54,6 +54,7 @@ class SplashController extends \BaseController {
 		curl_setopt($ch,CURLOPT_URL, $mcUrl);
 		curl_setopt($ch,CURLOPT_POST, count($mcData));
 		curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+		curl_setopt($ch,CURLOPT_FOLLOWLOCATION, true);
 
 		//execute post
 		$result = curl_exec($ch);
