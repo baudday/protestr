@@ -1,0 +1,15 @@
+version: 1
+composer:
+  mode: always
+  method: install
+post-deploy:
+  script: artisan
+    - migrate
+  script: artisan
+    - asset:publish
+    - --path="vendor/twbs/bootstrap/dist/"
+    - bootstrap
+  script: artisan
+    - asset:publish
+    - --path="vendor/components/jquery/"
+    - jquery
