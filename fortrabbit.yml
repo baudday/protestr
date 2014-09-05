@@ -4,12 +4,12 @@ composer:
   method: install
 post-deploy:
   script: artisan
-    - migrate
+    migrate
   script: artisan
-    - asset:publish
-    - --path="vendor/twbs/bootstrap/dist/"
-    - bootstrap
+    asset:publish
+    --path="vendor/twbs/bootstrap/dist/"
+    bootstrap
   script: artisan
-    - asset:publish
-    - --path="vendor/components/jquery/"
-    - jquery
+    asset:publish
+    --path="vendor/components/jquery/"
+    jquery
