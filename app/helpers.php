@@ -84,3 +84,9 @@ function states()
     'WY'=>'Wyoming',
   );
 }
+
+function timezones()
+{
+    $a = $b = array_map("strtoupper", array_keys(DateTimeZone::listAbbreviations()));
+    return array_combine($a, $b);
+}

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Protestr\Forms\CreateProtest;
 
 class ProtestsController extends \BaseController {
@@ -45,9 +46,14 @@ class ProtestsController extends \BaseController {
 	{
 		$data = $this->createProtestForm->sanitize(Input::all());
 		$this->createProtestForm->validate($data);
+
 		$data['user_id'] = Auth::user()->id;
-		// Protest::create($data);
-		return $data;
+		$data['when_date'] = Carbon::createFromTimeStamp(strtotime($data['date']));
+		if ($data['time'])
+			$data['when_time'] = Carbon::createFromTimeStamp(strtotime($data['time'] . ' ' . $data['timezone']));
+		unset($data['date'], $data['time'], $data['timezone']);
+		$protest = Protest::create($data);
+		return Redirect::route('protests.show', ['id' => $protest->id]);
 	}
 
 
@@ -59,7 +65,8 @@ class ProtestsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$protest = Protest::findOrFail($id);
+		return View::make('protests.show', compact('protest'));
 	}
 
 

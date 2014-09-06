@@ -129,37 +129,49 @@
 
               <h3>When is it?</h3>
 
-              <div class="form-group @if($errors->first('when_date')) has-error has-feedback @endif">
-                {{ Form::label('when_date', 'Date', ['class' => 'control-label']) }}
-                {{ Form::text('when_date', null, [
+              <div class="form-group @if($errors->first('date')) has-error has-feedback @endif">
+                {{ Form::label('date', 'Date', ['class' => 'control-label']) }}
+                {{ Form::text('date', null, [
                   'class' => 'form-control input-lg',
                   'tabindex' => '8',
                   'placeholder' => 'mm/dd/yyyy'
                 ]) }}
-                @if($errors->first('when_date'))
+                @if($errors->first('date'))
                   <span class="glyphicon glyphicon-remove form-control-feedback "></span>
-                  <div class="input-error"><small>{{ $errors->first('when_date') }}</small></div>
+                  <div class="input-error"><small>{{ $errors->first('date') }}</small></div>
                 @endif
               </div>
 
-              <div class="form-group @if($errors->first('when_time')) has-error has-feedback @endif">
-                {{ Form::label('when_time', 'Time (optional)', ['class' => 'control-label']) }}
-                {{ Form::text('when_time', null, [
-                  'class' => 'form-control input-lg',
-                  'tabindex' => '9',
-                  'placeholder' => '12:00PM EST']) }}
-                @if($errors->first('when_time'))
-                  <span class="glyphicon glyphicon-remove form-control-feedback "></span>
-                  <div class="input-error"><small>{{ $errors->first('when_time') }}</small></div>
-                @endif
+              <div class="row">
+                <div class="form-group @if($errors->first('time')) has-error has-feedback @endif col-xs-8">
+                  {{ Form::label('time', 'Time (optional)', ['class' => 'control-label']) }}
+                  {{ Form::text('time', null, [
+                    'class' => 'form-control input-lg',
+                    'tabindex' => '9',
+                    'placeholder' => '12:00PM']) }}
+                  @if($errors->first('time'))
+                    <span class="glyphicon glyphicon-remove form-control-feedback "></span>
+                    <div class="input-error"><small>{{ $errors->first('time') }}</small></div>
+                  @endif
+                </div>
+
+                <div class="form-group @if($errors->first('timezone')) has-error has-feedback @endif col-xs-4">
+                  {{ Form::label('timezone', 'Timezone (optional)', ['class' => 'control-label']) }}
+                  {{ Form::select('timezone', timezones(), null, [
+                    'class' => 'form-control input-lg',
+                    'tabindex' => '10'
+                  ]) }}
+                  @if($errors->first('timezone'))
+                    <span class="glyphicon glyphicon-remove form-control-feedback "></span>
+                  @endif
+                  <span class="danger">{{ $errors->first('timezone') }}</span>
+                </div>
               </div>
 
             </fieldset>
 
-            {{ Form::hidden('timezone') }}
-
             <div class="form-group">
-              {{ Form::submit('Preview protest', ['class' => 'btn btn-lg btn-primary' ]) }}
+              {{ Form::submit('Start protest', ['class' => 'btn btn-lg btn-primary' ]) }}
             </div>
 
           {{ Form::close() }}
@@ -172,7 +184,9 @@
 @section('javascript')
   {{ HTML::script('js/jstz.min.js') }}
   <script type="text/javascript">
-    var tz = jstz.determine();
-    $('input[name=timezone]').val(tz.name());
+    var ts = new Date().toTimeString();
+    var patt = /\((\w+)\)/g;
+    var tz = patt.exec(ts)[1];
+    $('select[name=timezone]').val(tz);
   </script>
 @stop
