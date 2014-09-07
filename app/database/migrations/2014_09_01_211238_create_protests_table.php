@@ -25,7 +25,7 @@ class CreateProtestsTable extends Migration {
 			$table->string('state')->index();
 			$table->string('country')->index();
 			$table->date('when_date')->index();
-			$table->time('when_time');
+			$table->time('when_time')->nullable();
 			$table->softDeletes();
 			$table->timestamps();
 		});
