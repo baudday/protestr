@@ -183,10 +183,9 @@
 
 @section('javascript')
   {{ HTML::script('js/jstz.min.js') }}
+  {{ HTML::script('js/timezones.js') }}
   <script type="text/javascript">
-    var ts = new Date().toTimeString();
-    var patt = /\((\w+)\)/g;
-    var tz = patt.exec(ts)[1];
+    var tz = getTimezone();
     $('select[name=timezone]').val(tz);
   </script>
 @stop
