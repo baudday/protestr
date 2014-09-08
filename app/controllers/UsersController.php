@@ -52,7 +52,16 @@ class UsersController extends \BaseController {
 	 */
 	public function show($username)
 	{
-		$user = User::where('username', $username)->firstOrFail();
+		$user = User::with(array(
+			'attending' => function($query)
+			{
+				$query->upcoming()->orderBy('when_date', 'asc');
+			},
+			'protests' => function($query)
+			{
+				$query->upcoming()->orderBy('when_date', 'asc');
+			}
+		))->where('username', $username)->firstOrFail();
 		return View::make('users.show', compact('user'));
 	}
 

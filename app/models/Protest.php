@@ -22,4 +22,9 @@ class Protest extends Eloquent {
     return $this->belongsToMany('User');
   }
 
+  public function scopeUpcoming($query)
+  {
+    return $query->where('when_date', '>', time());
+  }
+
 }
