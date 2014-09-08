@@ -53,6 +53,7 @@ class ProtestsController extends \BaseController {
 			$data['when_time'] = Carbon::createFromTimeStamp(strtotime($data['time'] . ' ' . $data['timezone']));
 		unset($data['date'], $data['time'], $data['timezone']);
 		$protest = Protest::create($data);
+		$protest->attendees()->attach(Auth::user()->id);
 		return Redirect::route('protests.show', ['id' => $protest->id]);
 	}
 
