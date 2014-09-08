@@ -4,16 +4,9 @@ function getTimezone () {
   return patt.exec(ts)[1];
 }
 
-function getTimeObject (date, time) {
-  var tz = getTimezone();
-  var dateTimeString = date;
+function getFormat (string) {
+  var regex = /((?:\d+)\:(?:\d+)\:(?:\d+))/
   var format = 'MMMM Do YYYY';
-  if (time) {
-    dateTimeString += ' ' + time + ' UTC';
-    format += ' [at] h:mm A [' + tz + ']';
-  }
-  return {
-    string: dateTimeString,
-    format: format
-  }
+  if (regex.exec(string)) format +=  ' [at] h:mm A';
+  return format;
 }

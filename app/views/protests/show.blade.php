@@ -10,7 +10,7 @@
       <div class="protest-header-container">
         <div class="protest-header">
           <h1>{{{ $protest->mission }}} <small>{{ link_to($protest->website, $protest->website, ['target' => 'blank']) }}</small></h1>
-          <h4 id="time">{{{ $protest->when_date }}} {{{ $protest->when_time }}} UTC</h4>
+          <h4 id="time">{{{ $protest->when_date }}} {{{ date('G:i:s e', strtotime($protest->when_time)) }}}</h4>
           <h4>{{ $protest->attendees->count() }} {{ person_or_people($protest->attendees->count()) }} attending</h4>
           {{ Form::open([
             'route' => ['protests.update', $protest->id],
@@ -54,12 +54,9 @@
   {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js') }}
   {{ HTML::script('js/timezones.js') }}
   <script type="text/javascript">
-    // Get time object from js/timezones.js
-    var time = getTimeObject('{{{ $protest->when_date }}}', '{{{ $protest->when_time }}}');
-    // moment from moment.js
-    var moment = moment(time.string);
-    $('#time').html(
-      moment.format(time.format)
-    );
+    var time = $('#time').html();
+    var format = getFormat(time);
+    var moment = moment(time);
+    $('#time').html(moment.format(format));
   </script>
 @stop
