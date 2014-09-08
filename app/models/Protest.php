@@ -17,4 +17,9 @@ class Protest extends Eloquent {
 
   protected $guarded = [];
 
+  public function attendees()
+  {
+    return $this->belongsToMany('User');
+  }
+
 }

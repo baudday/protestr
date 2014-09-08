@@ -1,10 +1,45 @@
 @extends('layouts.default')
 
+@section('css')
+  {{ HTML::style('css/protests/show.css') }}
+@stop
+
 @section('content')
   <div class="row">
-    <div class="col-xs-8">
-      <h1>{{{ $protest->mission }}} <small>{{ link_to($protest->website, $protest->website) }}</small></h1>
-      <h2><small id="time">{{{ $protest->when_date }}} {{{ $protest->when_time }}} UTC</small></h2>
+    <div class="col-sm-8 col-sm-offset-2">
+      <div class="protest-header-container">
+        <div class="protest-header">
+          <h1>{{{ $protest->mission }}} <small>{{ link_to($protest->website, $protest->website, ['target' => 'blank']) }}</small></h1>
+          <h4 id="time">{{{ $protest->when_date }}} {{{ $protest->when_time }}} UTC</h4>
+          <h4>{{ $protest->attendees->count() }} {{ person_or_people($protest->attendees->count()) }} attending</h4>
+          {{ Form::open([
+            'route' => ['protests.update', $protest->id],
+            'method' => 'put'
+          ]) }}
+          @if(! Auth::check() || ! $protest->attendees->contains(Auth::user()->id))
+            {{ Form::hidden('attendees', 'add') }}
+            <div class="btn-group">
+              <button type="submit" class="btn btn-danger">
+                <span class='glyphicon glyphicon-ok'></span> I'm not going
+              </button>
+              <button type="submit" class="btn btn-default">
+                I'm going
+              </button>
+            </div>
+          @else
+            {{ Form::hidden('attendees', 'remove') }}
+            <div class="btn-group">
+              <button type="submit" class="btn btn-default">
+                I'm not going
+              </button>
+              <button type="submit" class="btn btn-primary">
+                <span class='glyphicon glyphicon-ok'></span> I'm going
+              </button>
+            </div>
+          @endif
+            {{ Form::close() }}
+        </div>
+      </div>
 
       <h3>The backstory</h3>
       <p style="white-space: pre-wrap;">{{{ $protest->history }}}</p>

@@ -5,7 +5,6 @@ function getTimezone () {
 }
 
 function getTimeObject (date, time) {
-  console.log(time);
   var tz = getTimezone();
   var dateTimeString = date;
   var format = 'MMMM Do YYYY';

@@ -53,7 +53,7 @@ class UsersController extends \BaseController {
 	public function show($username)
 	{
 		$user = User::where('username', $username)->firstOrFail();
-		return $user;
+		return View::make('users.show', compact('user'));
 	}
 
 }

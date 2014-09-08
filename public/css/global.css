@@ -1,0 +1,9 @@
+body, html, h1, h2, h3, h4, h5 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: lighter;
+}
+
+.navbar-default .navbar-brand {
+  font-family: 'Lobster', cursive;
+  color: #a94442;
+}

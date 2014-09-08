@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>protestr</title>
     <link href='http://fonts.googleapis.com/css?family=Lobster|Open+Sans:400,300' rel='stylesheet' type='text/css'>
-    {{ HTML::style('packages/bootstrap/css/bootstrap.min.css')}}
+    {{ HTML::style('packages/bootstrap/css/bootstrap.min.css') }}
+    {{ HTML::style('css/global.css') }}
     {{ HTML::style('css/forms.css') }}
+    @yield('css')
   </head>
   <body>
     @include('layouts.partials.nav')

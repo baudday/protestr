@@ -90,7 +90,14 @@ class ProtestsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$input = Input::all();
+		$protest = Protest::find($id);
+		if (isset($input['attendees'])) {
+			$input['attendees'] == 'add'
+				? $protest->attendees()->attach(Auth::user()->id)
+				: $protest->attendees()->detach(Auth::user()->id);
+		}
+		return Redirect::back();
 	}
 
 

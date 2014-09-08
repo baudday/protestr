@@ -90,3 +90,8 @@ function timezones()
     $a = $b = array_map("strtoupper", array_keys(DateTimeZone::listAbbreviations()));
     return array_combine($a, $b);
 }
+
+function person_or_people($value)
+{
+    return $value == 1 ? 'person' : 'people';
+}
