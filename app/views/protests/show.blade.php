@@ -10,7 +10,7 @@
       <div class="protest-header-container">
         <div class="protest-header">
           <h1>{{{ $protest->mission }}} <small>{{ link_to($protest->website, $protest->website, ['target' => 'blank']) }}</small></h1>
-          <h4 id="time">{{{ $protest->when_date }}} {{{ date('G:i:s e', strtotime($protest->when_time)) }}}</h4>
+          <h4 id="time">{{{ $protest->when_date }}} {{{ $protest->when_time ? date('G:i:s e', strtotime($protest->when_time)) : null }}}</h4>
           <h4>{{ $protest->attendees->count() }} {{ person_or_people($protest->attendees->count()) }} attending</h4>
           {{ Form::open([
             'route' => ['protests.update', $protest->id],
