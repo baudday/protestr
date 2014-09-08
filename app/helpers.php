@@ -95,3 +95,14 @@ function person_or_people($value)
 {
     return $value == 1 ? 'person' : 'people';
 }
+
+function maps_url(array $args)
+{
+    return "//maps.google.com/?q=" . urlencode(implode('+', $args));
+}
+
+function city_state($city, $state)
+{
+    if ($city && $state) return "$city, $state";
+    return rtrim("$city $state");
+}

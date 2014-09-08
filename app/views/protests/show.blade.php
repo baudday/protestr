@@ -11,33 +11,45 @@
         <div class="protest-header">
           <h1>{{{ $protest->mission }}} <small>{{ link_to($protest->website, $protest->website, ['target' => 'blank']) }}</small></h1>
           <h4 id="time">{{{ $protest->when_date }}} {{{ $protest->when_time ? date('G:i:s e', strtotime($protest->when_time)) : null }}}</h4>
-          <h4>{{ $protest->attendees->count() }} {{ person_or_people($protest->attendees->count()) }} attending</h4>
-          {{ Form::open([
-            'route' => ['protests.update', $protest->id],
-            'method' => 'put'
-          ]) }}
-          @if(! Auth::check() || ! $protest->attendees->contains(Auth::user()->id))
-            {{ Form::hidden('attendees', 'add') }}
-            <div class="btn-group">
-              <button type="submit" class="btn btn-danger">
-                <span class='glyphicon glyphicon-ok'></span> I'm not going
-              </button>
-              <button type="submit" class="btn btn-default">
-                I'm going
-              </button>
-            </div>
-          @else
-            {{ Form::hidden('attendees', 'remove') }}
-            <div class="btn-group">
-              <button type="submit" class="btn btn-default">
-                I'm not going
-              </button>
-              <button type="submit" class="btn btn-primary">
-                <span class='glyphicon glyphicon-ok'></span> I'm going
-              </button>
-            </div>
+          @if($protest->address || $protest->city || $protest->state)
+            <address>
+              <h4>
+                <a href="{{ maps_url([$protest->address, $protest->city, $protest->state]) }}" target="_blank">
+                  <strong>{{{ $protest->address }}}</strong>
+                  {{ city_state($protest->city, $protest->state) }}</h4>
+                </a>
+              </h4>
+            </address>
           @endif
+          <div>
+            {{ Form::open([
+              'route' => ['protests.update', $protest->id],
+              'method' => 'put'
+            ]) }}
+            @if(! Auth::check() || ! $protest->attendees->contains(Auth::user()->id))
+              {{ Form::hidden('attendees', 'add') }}
+              <div class="btn-group">
+                <button type="submit" class="btn btn-danger">
+                  <span class='glyphicon glyphicon-ok'></span> I'm not going
+                </button>
+                <button type="submit" class="btn btn-default">
+                  I'm going
+                </button>
+              </div>
+            @else
+              {{ Form::hidden('attendees', 'remove') }}
+              <div class="btn-group">
+                <button type="submit" class="btn btn-default">
+                  I'm not going
+                </button>
+                <button type="submit" class="btn btn-primary">
+                  <span class='glyphicon glyphicon-ok'></span> I'm going
+                </button>
+              </div>
+            @endif
             {{ Form::close() }}
+            <h5>{{ $protest->attendees->count() }} {{ person_or_people($protest->attendees->count()) }} attending</h5>
+          </div>
         </div>
       </div>
 
