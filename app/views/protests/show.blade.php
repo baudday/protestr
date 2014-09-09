@@ -9,18 +9,17 @@
     <div class="col-sm-8 col-sm-offset-2">
       <div class="protest-header-container">
         <div class="protest-header">
-          <h1>{{{ $protest->mission }}} <small>{{ link_to($protest->website, $protest->website, ['target' => 'blank']) }}</small></h1>
+          <h1>{{{ $protest->mission }}}</h1>
           <h4 id="time">{{{ $protest->when_date }}} {{{ $protest->when_time ? date('G:i:s e', strtotime($protest->when_time)) : null }}}</h4>
           @if($protest->address || $protest->city || $protest->state)
-            <address>
-              <h4>
-                <a href="{{ maps_url([$protest->address, $protest->city, $protest->state]) }}" target="_blank">
-                  <strong>{{{ $protest->address }}}</strong>
-                  {{ city_state($protest->city, $protest->state) }}</h4>
-                </a>
-              </h4>
-            </address>
+            <h4>
+              <a href="{{ maps_url([$protest->address, $protest->city, $protest->state]) }}" target="_blank">
+                <strong>{{{ $protest->address }}}</strong>
+                {{ city_state($protest->city, $protest->state) }}</h4>
+              </a>
+            </h4>
           @endif
+          <h4>{{ link_to($protest->website, $protest->website, ['target' => 'blank']) }}</h4>
           <div>
             {{ Form::open([
               'route' => ['protests.update', $protest->id],

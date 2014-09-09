@@ -20,6 +20,7 @@
   opacity: 100;
 }
 
-.protest-header a {
-  color: #a94442;
+.protest-header a, .protest a:hover {
+  color: #9fcedf;
+  text-decoration: none;
 }
