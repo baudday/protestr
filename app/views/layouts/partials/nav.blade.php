@@ -29,6 +29,7 @@
             <ul class="dropdown-menu" role="menu">
               <li>{{ link_to_route('profile', 'profile', [
                 'username' => Auth::user()->username]) }}</li>
+              <li><a href="#">messages <!-- <span class="badge pull-right">1</span> --></a></li>
               <li class="divider"></li>
               <li>{{ link_to_route('logout', 'logout') }}</li>
             </ul>

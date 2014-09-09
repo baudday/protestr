@@ -5,6 +5,7 @@ Route::get('/', [
   'uses' => 'PagesController@index'
 ]);
 
+
 /**
  * Users methods
  */
@@ -36,7 +37,21 @@ Route::resource('/sessions', 'SessionsController', [
   'only' => ['create', 'store', 'destroy']
 ]);
 
+
 /**
  * Protests routes
  */
 Route::resource('/protests', 'ProtestsController');
+
+
+/**
+ * Messages routes
+ */
+Route::resource('/messages', 'MessagesController', [
+  'except' => ['edit', 'update', 'destroy', 'show']
+]);
+
+Route::get('/messages/{username}', [
+  'as' => 'messages.show',
+  'uses' => 'MessagesController@show'
+]);
