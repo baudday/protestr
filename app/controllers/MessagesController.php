@@ -22,6 +22,13 @@ class MessagesController extends \BaseController {
 	public function index()
 	{
 		// Inbox
+		// TODO: Need to show last message in thread
+		$messages = Message::with('sender')
+			->receivedBy(Auth::user()->id)
+			->threads()
+			->get();
+
+		return View::make('messages.index', compact('messages'));
 	}
 
 
@@ -88,7 +95,21 @@ class MessagesController extends \BaseController {
 	{
 		// Individual thread
 		$user = User::whereUsername($username)->firstOrFail();
-		$messages = Message::with('sender')->thread(Auth::user()->id, $user->id)->get();
+		$messages = Message::with('sender')
+								->thread(Auth::user()->id, $user->id)->get();
+
+		// Mark messages as read
+		$unread = $messages->filter(function($message)
+		{
+			return !$message->read && $message->sender_id !== Auth::user()->id;
+		});
+
+		$unread->each(function($message)
+		{
+			$message->read = true;
+			$message->save();
+		});
+
 		return View::make('messages.show', compact('user', 'messages'));
 	}
 

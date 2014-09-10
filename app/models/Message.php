@@ -29,11 +29,20 @@ class Message extends Eloquent {
 
   public function scopeThread($query, $senderId, $receiverId)
   {
-    $query->where('sender_id', $senderId)
-          ->orWhere('sender_id', $receiverId)
-          ->where('receiver_id', $receiverId)
-          ->orWhere('receiver_id', $senderId)
-          ->orderBy('created_at', 'asc');
+    return $query->where('sender_id', $senderId)
+                ->where('receiver_id', $receiverId)
+                ->orWhere('receiver_id', $senderId)
+                ->where('sender_id', $receiverId);
+  }
+
+  public function scopeThreads($query)
+  {
+    return $query->groupBy('sender_id');
+  }
+
+  public function scopeUnread($query)
+  {
+    $query->where('read', false);
   }
 
   public function sender()
