@@ -6,7 +6,7 @@ function getTimezone () {
 
 function getFormat (string) {
   var regex = /((?:\d+)\:(?:\d+)\:(?:\d+))/
-  var format = 'MMMM Do YYYY';
+  var format = 'MMM. Do YYYY';
   if (regex.exec(string)) format +=  ' [at] h:mm A';
   return format;
 }
