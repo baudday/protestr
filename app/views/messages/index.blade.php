@@ -18,8 +18,20 @@
           </a>
         </h3>
         <p>{{{ str_limit($message->message, 140) }}}</p>
+        <p><small class="time">{{{ date('Y-m-d G:i:s e', $message->created_at->timestamp) }}}</small></p>
         <hr>
       </div>
     </div>
   @endforeach
+@stop
+
+@section('javascript')
+  {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js') }}
+  {{ HTML::script('js/timezones.js') }}
+  <script type="text/javascript">
+    $('.time').html(function(index, value) {
+      var format = getFormat(value);
+      return moment(value).format(format);
+    });
+  </script>
 @stop
