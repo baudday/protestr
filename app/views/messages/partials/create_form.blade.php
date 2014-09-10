@@ -41,7 +41,7 @@
 
   <div class="form-group">
     <div class="col-sm-10 col-sm-offset-2">
-      <button type="submit" class="btn btn-primary btn-lg">Send</button>
+      <button type="submit" class="btn btn-primary btn-lg" tabindex="2">Send</button>
     </div>
   </div>
 {{ Form::close() }}
