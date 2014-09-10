@@ -7,6 +7,7 @@
 @section('content')
   <div class="row">
     <div style="padding: 20px;"class="col-md-6 col-md-offset-3">
+      <h4>{{ link_to_route('messages.index', 'back to inbox') }}</h4>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h1>{{{ $user->username }}}</h1>
