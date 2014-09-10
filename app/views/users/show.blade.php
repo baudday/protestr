@@ -16,7 +16,7 @@
       {{ gravatar_tag($user->email, array('s' => '132', 'd' => 'identicon')) }}
       @if(Auth::check())
         @if(Auth::user()->username == $user->username)
-          <h5><a href="#"><span class="glyphicon glyphicon-pencil"></span> edit profile</h5>
+          <h5><a href="#"><span class="glyphicon glyphicon-pencil"></span> edit profile</a></h5>
         @else
           <h5><a href="#" data-toggle="modal" data-target="#send-message"><span class="glyphicon glyphicon-envelope"></span> send message</a></h5>
         @endif
