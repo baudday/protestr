@@ -1,5 +1,9 @@
 @extends('layouts.default')
 
+@section('css')
+  {{ HTML::style('css/messages/show.css') }}
+@stop
+
 @section('content')
   <div class="row">
     <div style="padding: 20px;"class="col-md-6 col-md-offset-3">
@@ -7,7 +11,7 @@
         <div class="panel-heading">
           <h1>{{{ $user->username }}}</h1>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" id="chat-window">
           @foreach($messages as $message)
             <div class="row">
               <div class="col-xs-12">
@@ -22,11 +26,14 @@
                     $message->sender->username, 
                     ['username' => $message->sender->username]) }}
                   </small>
-                  <p>{{{ $message->message }}}</p>
+                  <p><small class="time">{{{ date('Y-m-d G:i:s e', $message->created_at->timestamp) }}}</small><br />
+                    {{{ $message->message }}}</p>
                 </div>
               </div>
             </div>
           @endforeach
+        </div>
+        <div class="panel-footer">
           <div class="row">
             <div class="col-xs-12">
               @include('messages.partials.create_form')
@@ -36,4 +43,17 @@
       </div>
     </div>
   </div>
+@stop
+
+@section('javascript')
+  {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js') }}
+  {{ HTML::script('js/timezones.js') }}
+  <script type="text/javascript">
+    var objDiv = document.getElementById("chat-window");
+    objDiv.scrollTop = objDiv.scrollHeight;
+    $('.time').html(function(index, value) {
+      var format = getFormat(value);
+      return moment(value).format(format);
+    });
+  </script>
 @stop
