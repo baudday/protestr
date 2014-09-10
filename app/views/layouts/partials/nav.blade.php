@@ -24,12 +24,21 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               {{ gravatar_tag(Auth::user()->email, array('s' => 20, 'd' => 'identicon')) }}
               {{ Auth::user()->username }}
+              @if(Auth::user()->unreadMessageCount() > 0)
+                <span class="badge">{{ Auth::user()->unreadMessageCount() }}</span>
+              @endif
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu" role="menu">
               <li>{{ link_to_route('profile', 'profile', [
                 'username' => Auth::user()->username]) }}</li>
-              <li>{{link_to_route('messages.index', 'messages') }}</li>
+              <li>
+                <a href="{{ route('messages.index') }}">messages
+                  @if(Auth::user()->unreadMessageCount() > 0)
+                    <span class="badge pull-right">{{ Auth::user()->unreadMessageCount() }}</span>
+                  @endif
+                </a>
+              </li>
               <li class="divider"></li>
               <li>{{ link_to_route('logout', 'logout') }}</li>
             </ul>

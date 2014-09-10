@@ -37,7 +37,10 @@ class Message extends Eloquent {
 
   public function scopeThreads($query)
   {
-    return $query->groupBy('sender_id');
+    $sub = $query->orderBy('created_at', 'desc');
+    return $query->select(DB::raw('*'))
+    ->from(DB::raw("({$sub->toSql()}) as sub"))
+    ->groupBy('sender_id');
   }
 
   public function scopeUnread($query)

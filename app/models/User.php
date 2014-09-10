@@ -50,4 +50,9 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 		return $this->hasMany('Message', 'receiver_id');
 	}
 
+	public function unreadMessageCount()
+	{
+		return $this->hasMany('Message', 'receiver_id')->where('read', false)->count();
+	}
+
 }

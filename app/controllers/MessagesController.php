@@ -22,10 +22,9 @@ class MessagesController extends \BaseController {
 	public function index()
 	{
 		// Inbox
-		// TODO: Need to show last message in thread
 		$messages = Message::with('sender')
-			->receivedBy(Auth::user()->id)
 			->threads()
+			->receivedBy(Auth::user()->id)
 			->get();
 
 		return View::make('messages.index', compact('messages'));
