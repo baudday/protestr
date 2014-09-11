@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="/">home</a></li>
-        <li><a href="#">about</a></li>
+        <li>{{ link_to_route('protests.index', 'protests') }}</li>
         <li>{{ link_to_route('protests.create', 'start a protest') }}</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

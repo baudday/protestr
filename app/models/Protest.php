@@ -19,12 +19,20 @@ class Protest extends Eloquent {
 
   public function attendees()
   {
-    return $this->belongsToMany('User');
+    return $this->belongsToMany('User')->orderBy('username');
   }
 
   public function scopeUpcoming($query)
   {
     return $query->where('when_date', '>', time());
+  }
+
+  public function scopePopular($query)
+  {
+    return $query->select(DB::raw('*, count(*) as attendeeCount'))
+          ->join('protest_user', 'protests.id', '=', 'protest_user.protest_id')
+          ->groupBy('protest_id')
+          ->orderBy('attendeeCount', 'desc');
   }
 
 }

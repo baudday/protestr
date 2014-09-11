@@ -22,7 +22,9 @@ class ProtestsController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		$protests = Protest::popular()->upcoming()->get();
+		$top = $protests->shift();
+		return View::make('protests.index', compact('protests', 'top'));
 	}
 
 
@@ -66,7 +68,7 @@ class ProtestsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		$protest = Protest::findOrFail($id);
+		$protest = Protest::with('attendees')->findOrFail($id);
 		return View::make('protests.show', compact('protest'));
 	}
 
