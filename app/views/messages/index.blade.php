@@ -3,7 +3,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
-      <h1>Inbox <small><span class="glyphicon glyphicon-asterisk"></span> = unread messages</h1>
+      <h1>Inbox <small><span class="glyphicon glyphicon-asterisk"></span> = unread messages</small></h1>
     </div>
   </div>
   @foreach($messages as $message)
