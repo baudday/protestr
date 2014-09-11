@@ -19,6 +19,9 @@
 
     {{ HTML::script('packages/jquery/jquery.min.js') }}
     {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
+    {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js') }}
+    {{ HTML::script('js/timezones.js') }}
+    {{ HTML::script('js/global.js') }}
     @yield('javascript')
   </body>
 </html>

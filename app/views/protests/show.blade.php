@@ -10,7 +10,7 @@
       <div class="protest-header-container">
         <div class="protest-header">
           <h1>{{{ $protest->mission }}}</h1>
-          <h4 id="time">{{{ $protest->when_date }}} {{{ $protest->when_time ? date('G:i:s e', strtotime($protest->when_time)) : null }}}</h4>
+          <h4 class="time">{{{ $protest->when_date }}} {{{ $protest->when_time ? date('G:i:s e', strtotime($protest->when_time)) : null }}}</h4>
           @if($protest->address || $protest->city || $protest->state)
             <h4>
               <a href="{{ maps_url([$protest->address, $protest->city, $protest->state]) }}" target="_blank">
@@ -47,7 +47,11 @@
               </div>
             @endif
             {{ Form::close() }}
-            <h5>{{ $protest->attendees->count() }} {{ person_or_people($protest->attendees->count()) }} attending</h5>
+            <h5>
+              <a href="#" data-toggle="modal" data-target="#show-attendees">
+                {{ $protest->attendees->count() }} {{ person_or_people($protest->attendees->count()) }} attending
+              </a>
+            </h5>
           </div>
         </div>
       </div>
@@ -59,15 +63,27 @@
       <p style="white-space: pre-wrap;">{{{ $protest->plan }}}</p>
     </div>
   </div>
-@stop
 
-@section('javascript')
-  {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js') }}
-  {{ HTML::script('js/timezones.js') }}
-  <script type="text/javascript">
-    var time = $('#time').html();
-    var format = getFormat(time);
-    var moment = moment(time);
-    $('#time').html(moment.format(format));
-  </script>
+  <!-- Attendees Modal -->
+  <div class="modal fade" id="show-attendees" tabindex="-1" role="dialog" aria-labelledby="show-attendees-label" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="show-attendees-label">Attendees</h4>
+        </div>
+        <div class="modal-body">
+          @foreach($protest->attendees as $attendee)
+            <div class="row">
+              <div class="col-xs-12">
+                {{ link_to_route('users.show', $attendee->username, $attendee->username) }}
+                <span class="glyphicon glyphicon-chevron-right pull-right"></span>
+                <hr>
+              </div>
+            </div>
+          @endforeach
+        </div>
+      </div>
+    </div>
+  </div>
 @stop

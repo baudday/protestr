@@ -24,14 +24,3 @@
     </div>
   @endforeach
 @stop
-
-@section('javascript')
-  {{ HTML::script('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment.min.js') }}
-  {{ HTML::script('js/timezones.js') }}
-  <script type="text/javascript">
-    $('.time').html(function(index, value) {
-      var format = getFormat(value);
-      return moment(value).format(format);
-    });
-  </script>
-@stop

@@ -183,7 +183,6 @@
 
 @section('javascript')
   {{ HTML::script('js/jstz.min.js') }}
-  {{ HTML::script('js/timezones.js') }}
   <script type="text/javascript">
     var tz = getTimezone();
     $('select[name=timezone]').val(tz);
