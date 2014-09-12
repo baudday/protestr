@@ -35,4 +35,21 @@ class Protest extends Eloquent {
           ->orderBy('attendeeCount', 'desc');
   }
 
+  public function scopeNear($query, $lat, $lon)
+  {
+    $MILE_LAT = 1/69.11;
+    $MILE_LON = 1/(69.11*cos($lat));
+    $lat_radius = 10*$MILE_LAT;
+    $lon_radius = 10*$MILE_LON;
+
+    return $query->whereBetween('latitude', [
+              min($lat-$lat_radius, $lat+$lat_radius),
+              max($lat-$lat_radius, $lat+$lat_radius)
+            ])
+            ->whereBetween('longitude', [
+              min($lon-$lon_radius, $lon+$lon_radius),
+              max($lon-$lon_radius, $lon+$lat_radius)
+            ]);
+  }
+
 }

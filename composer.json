@@ -7,7 +7,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"components/jquery": "*",
-		"twbs/bootstrap": "*"
+		"twbs/bootstrap": "*",
+		"geoip2/geoip2": "~0.8.0"
 	},
 	"autoload": {
 		"classmap": [
