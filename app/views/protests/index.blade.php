@@ -7,13 +7,7 @@
 @section('content')
   <div class="row" ng-app="protestApp" ng-controller="protestsController">
     <div class="col-md-8 col-md-offset-2">
-      <div style="text-align: center;" ng-show="loading">
-        <h2>
-          <img src="img/loader.gif" width="20" /> fetching protests near you...<br />
-          <small>For best results, please allow us to use your location</small>
-        </h2>
-      </div>
-      <div ng-hide="loading">
+      <div ng-hide="loading || error">
         <h1>Trending protests near you</h1>
         <div class="row top-protest">
           <div class="col-md-12">
@@ -43,12 +37,44 @@
           </div>
         </div>
       </div>
+
+      <div style="text-align: center;" ng-show="loading">
+        <h2>
+          <img src="img/loader.gif" width="20" /> fetching protests near you...<br />
+          <small>For best results, please allow us to use your location</small>
+        </h2>
+      </div>
+
+      <div style="text-align: center;" ng-show="error">
+        <h2>
+          <span ng-show="error && !noResults"><strong>Oops!</strong> We can't seem to find you! :(</span>
+          <span ng-show="noResults && error"><strong>No results</strong> We can't figure out where that is. Please try a different query.</span>
+          <br />
+          <small>For best results, please allow us to use your location</small>
+        </h2>
+        <div class="form-group col-xs-8 col-xs-offset-2">
+          <form ng-submit="submitLocation()">
+            <div class="input-group input-group-lg">
+              {{ Form::text('address', null, [
+                'class' => 'form-control input-lg',
+                'tabindex' => '1',
+                'placeholder' => 'Where are you?',
+                'ng-model' => 'locationData.address'
+              ]) }}
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-default btn-lg" tabindex="2">Go</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
 @stop
 
 @section('javascript')
   {{ HTML::script('//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js') }}
+  {{ HTML::script('https://maps.googleapis.com/maps/api/js?key=AIzaSyC-fp-wfsRUi-JeIiaHGFuXNjsCHe1pWVU')}}
   {{ HTML::script('js/controllers/protests/protestMainCtrl.js') }}
   {{ HTML::script('js/services/protests/protestService.js') }}
   {{ HTML::script('js/services/locationService.js') }}

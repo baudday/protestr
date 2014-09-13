@@ -28,6 +28,7 @@ class ProtestsController extends \BaseController {
 			$lat = Input::get('lat');
 			$lon = Input::get('lon');
 		}
+
 		// Try GeoIP if geolocation fails
 		else {
 			try {
@@ -41,21 +42,29 @@ class ProtestsController extends \BaseController {
 					'state'			=> $row->mostSpecificSubdivision->isoCode
 				];
 			}
-			// TODO: All else failed, ask the user to enter their location
+			// All else failed, ask the user to enter their location
 			catch (GeoIp2\Exception\AddressNotFoundException $e)
 			{
-				return $e;
+				if (Input::get('format') == 'json')
+				{
+					$response = Response::make([
+					'error' => "Couldn't determine location"
+					], 500);
+					return $response;
+				}
+
+				return View::make('protests.index');
 			}
 		}
 
-		$protests = Protest::near($lat, $lon)->popular()->upcoming()->get();
-		$top = $protests->shift();
 
 		if (Input::get('format') == 'json') {
+			$protests = Protest::near($lat, $lon)->popular()->upcoming()->get();
+			$top = $protests->shift();
 			return compact('protests', 'top', 'location');
 		}
 
-		return View::make('protests.index', compact('protests', 'top', 'location'));
+		return View::make('protests.index');
 	}
 
 
