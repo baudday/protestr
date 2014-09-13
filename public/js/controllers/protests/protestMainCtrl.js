@@ -9,17 +9,12 @@ angular.module('protestMainCtrl', [])
 
     Location.getLocation(function(position) {
       var url = '/protests?format=json';
-      if(!position.coords) {
-        $scope.$apply(function() {
-          $scope.error = true;
-          $scope.loading = false;
-        });
-        return;
+      if(position.coords) {
+        var lat = position.coords.latitude,
+            lon = position.coords.longitude;
+        url += '&lat=' + lat + '&lon=' + lon;
       }
 
-      var lat = position.coords.latitude,
-          lon = position.coords.longitude;
-      url += '&lat=' + lat + '&lon=' + lon;
       Protest.get(url)
         .success(function(data) {
           $scope.data = {
@@ -45,7 +40,7 @@ angular.module('protestMainCtrl', [])
 
       // Geocode input
       Protest.save($scope.locationData, function(results, status) {
-          // Zero results
+          // Fix for zero results
           if (status === 'ZERO_RESULTS') {
             $scope.$apply(function() {
               $scope.loading = false;
