@@ -47,8 +47,12 @@
 
       <div style="text-align: center;" ng-show="error">
         <h2>
-          <span ng-show="error && !noResults"><strong>Oops!</strong> We can't seem to find you! :(</span>
-          <span ng-show="noResults && error"><strong>No results</strong> We can't figure out where that is. Please try a different query.</span>
+          <span ng-show="!noResults && !badLocation"><strong>Oops!</strong> We can't seem to find you! :(</span>
+          <span ng-show="!noResults && badLocation"><strong>Oops!</strong> We don't recognize that location!</span>
+          <span ng-show="noResults && !badLocation">
+            <strong>No protests</strong> in your area.
+            {{ link_to_route('protests.create', 'start one!') }}
+          </span>
           <br />
           <small>For best results, please allow us to use your location</small>
         </h2>
@@ -68,13 +72,14 @@
           </form>
         </div>
       </div>
+
     </div>
   </div>
 @stop
 
 @section('javascript')
   {{ HTML::script('//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js') }}
-  {{ HTML::script('https://maps.googleapis.com/maps/api/js?key=AIzaSyC-fp-wfsRUi-JeIiaHGFuXNjsCHe1pWVU')}}
+  {{ HTML::script('//maps.googleapis.com/maps/api/js?key=AIzaSyC-fp-wfsRUi-JeIiaHGFuXNjsCHe1pWVU')}}
   {{ HTML::script('js/controllers/protests/protestMainCtrl.js') }}
   {{ HTML::script('js/services/protests/protestService.js') }}
   {{ HTML::script('js/services/locationService.js') }}

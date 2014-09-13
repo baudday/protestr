@@ -4,16 +4,22 @@ angular.module('protestMainCtrl', [])
     $scope.locationData = {};
     $scope.loading = true;
     $scope.error = false;
+    $scope.badLocation = false;
     $scope.noResults = false;
 
     Location.getLocation(function(position) {
       var url = '/protests?format=json';
-      if(position.coords) {
-        var lat = position.coords.latitude,
-            lon = position.coords.longitude;
-        url += '&lat=' + lat + '&lon=' + lon;
+      if(!position.coords) {
+        $scope.$apply(function() {
+          $scope.error = true;
+          $scope.loading = false;
+        });
+        return;
       }
 
+      var lat = position.coords.latitude,
+          lon = position.coords.longitude;
+      url += '&lat=' + lat + '&lon=' + lon;
       Protest.get(url)
         .success(function(data) {
           $scope.data = {
@@ -34,15 +40,19 @@ angular.module('protestMainCtrl', [])
     $scope.submitLocation = function() {
       $scope.loading = true;
       $scope.error = false;
+      $scope.badLocation = false;
       $scope.noResults = false;
 
       // Geocode input
       Protest.save($scope.locationData, function(results, status) {
-          // TODO: Fix for zero results
+          // Zero results
           if (status === 'ZERO_RESULTS') {
-            $scope.loading = false;
-            $scope.error = true;
-            $scope.noResults = true;
+            $scope.$apply(function() {
+              $scope.loading = false;
+              $scope.error = true;
+              $scope.badLocation = true;
+              $scope.noResults = false;
+            });
           }
           else {
             var lat = results[0].geometry.location.k;
@@ -58,14 +68,22 @@ angular.module('protestMainCtrl', [])
 
             Protest.get(url)
               .success(function(data) {
-                $scope.data = {
-                  top: data.top,
-                  cols: [
-                    data.protests.splice(0, Math.ceil(data.protests.length / 2)),
-                    data.protests
-                  ]
-                };
-                $scope.loading = false;
+                if (!data.top) {
+                  $scope.loading = false;
+                  $scope.error = true;
+                  $scope.noResults = true;
+                  $scope.badLocation = false;
+                }
+                else {
+                  $scope.data = {
+                    top: data.top,
+                    cols: [
+                      data.protests.splice(0, Math.ceil(data.protests.length / 2)),
+                      data.protests
+                    ]
+                  };
+                  $scope.loading = false;
+                }
               })
               .error(function(data) {
                 $scope.loading = false;
