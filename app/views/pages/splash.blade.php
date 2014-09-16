@@ -43,6 +43,22 @@
               @endif
             {{ Form::close() }}
           @endif
+          <div class="social">
+            <a href="http://facebook.com/protestr" target="blank"><img src="img/facebook.png" /></a>
+            <a href="http://twitter.com/protestrapp" target="blank"><img src="img/twitter.png" /></a><br />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4">
+            <a href="http://erlibird.com/go/protestr" target="blank">
+              <img src="http://erlibird.s3.amazonaws.com/images/trans-black-sm-featured.png" class="erlibird">
+            </a>
+          </div>
         </div>
       </div>
     </div>
