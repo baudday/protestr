@@ -4,8 +4,8 @@ angular.module('protestMainCtrl', [])
     $scope.locationData = {};
     $scope.loading = true;
     $scope.error = false;
-    $scope.badLocation = false;
-    $scope.noResults = false;
+    $scope.badLocation = true;
+    $scope.noResults = true;
 
     Location.getLocation(function(position) {
       var url = '/protests?format=json';
@@ -17,14 +17,22 @@ angular.module('protestMainCtrl', [])
 
       Protest.get(url)
         .success(function(data) {
-          $scope.data = {
-            top: data.top,
-            cols: [
-              data.protests.splice(0, Math.ceil(data.protests.length / 2)),
-              data.protests
-            ]
-          };
-          $scope.loading = false;
+          if (!data.top) {
+            $scope.loading = false;
+            $scope.error = true;
+            $scope.noResults = true;
+            $scope.badLocation = false;
+          }
+          else {
+            $scope.data = {
+              top: data.top,
+              cols: [
+                data.protests.splice(0, Math.ceil(data.protests.length / 2)),
+                data.protests
+              ]
+            };
+            $scope.loading = false;
+          }
         })
         .error(function(data) {
           $scope.loading = false;
@@ -35,8 +43,8 @@ angular.module('protestMainCtrl', [])
     $scope.submitLocation = function() {
       $scope.loading = true;
       $scope.error = false;
-      $scope.badLocation = false;
-      $scope.noResults = false;
+      $scope.badLocation = true;
+      $scope.noResults = true;
 
       // Geocode input
       Protest.save($scope.locationData, function(results, status) {

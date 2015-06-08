@@ -47,16 +47,17 @@
 
       <div style="text-align: center;" ng-show="error">
         <h2>
-          <span ng-show="!noResults && !badLocation"><strong>Oops!</strong> We can't seem to find you! :(</span>
-          <span ng-show="!noResults && badLocation"><strong>Oops!</strong> We don't recognize that location!</span>
           <span ng-show="noResults && !badLocation">
-            <strong>No protests</strong> in your area.
+            <strong>No protests</strong> in your area :(
+            <br />
             {{ link_to_route('protests.create', 'start one!') }}
           </span>
+          <span ng-show="noResults && badLocation"><strong>Oops!</strong> We can't seem to find you! :(</span>
+          <span ng-show="!noResults && badLocation"><strong>Oops!</strong> We don't recognize that location!</span>
           <br />
-          <small>For best results, please allow us to use your location</small>
+          <small ng-show="badLocation">For best results, please allow us to use your location</small>
         </h2>
-        <div class="form-group col-xs-8 col-xs-offset-2">
+        <div ng-show="badLocation" class="form-group col-xs-8 col-xs-offset-2">
           <form ng-submit="submitLocation()">
             <div class="input-group input-group-lg">
               {{ Form::text('address', null, [
