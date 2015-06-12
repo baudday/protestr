@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use GeoIp2\Database\Reader;
 use Protestr\Forms\CreateProtest;
+use Protestr\Location;
 
 class ProtestsController extends \BaseController {
 
@@ -91,8 +92,17 @@ class ProtestsController extends \BaseController {
 
 		$data['user_id'] = Auth::user()->id;
 		$data['when_date'] = Carbon::createFromTimeStamp(strtotime($data['date']));
+
 		if ($data['time'])
 			$data['when_time'] = Carbon::createFromTimeStamp(strtotime($data['time'] . ' ' . $data['timezone']));
+
+		if ($data['address'] || $data['city'] || $data['state']) {
+			$location = Location::geocode($data['address'] . " " . $data['city'] . ", " . $data['state']);
+			$coords = $location->results[0]->geometry->location;
+			$data['latitude'] = $coords->lat;
+			$data['longitude'] = $coords->lng;
+		}
+
 		unset($data['date'], $data['time'], $data['timezone']);
 		$protest = Protest::create($data);
 		$protest->attendees()->attach(Auth::user()->id);
