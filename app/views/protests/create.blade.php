@@ -19,18 +19,37 @@
             <!-- Protest Info -->
             <fieldset>
 
-              <div class="form-group @if($errors->first('mission')) has-error has-feedback @endif">
-                {{ Form::label('mission', 'Your mission', ['class' => 'control-label']) }}
-                {{ Form::text('mission', null, [
-                  'class' => 'form-control input-lg',
-                  'tabindex' => '1',
-                  'placeholder' => 'What are you trying to accomplish?'
-                ]) }}
-                @if($errors->first('mission'))
-                  <span class="glyphicon glyphicon-remove form-control-feedback "></span>
-                  <div class="input-error"><small>{{ $errors->first('mission') }}</small></div>
-                @endif
-                <small>This should be a short call to action. Why are you arranging this protest?</small>
+              <div class="row">
+                <div class="form-group @if($errors->first('mission')) has-error has-feedback @endif col-xs-8">
+                  {{ Form::label('mission', 'Your mission', ['class' => 'control-label']) }}
+                  {{ Form::text('mission', null, [
+                    'class' => 'form-control input-lg',
+                    'tabindex' => '1',
+                    'placeholder' => 'What are you trying to accomplish?'
+                  ]) }}
+                  @if($errors->first('mission'))
+                    <span class="glyphicon glyphicon-remove form-control-feedback "></span>
+                    <div class="input-error"><small>{{ $errors->first('mission') }}</small></div>
+                  @endif
+                  <small>This should be a short call to action. Why are you arranging this protest?</small>
+                </div>
+
+                <div class="form-group @if($errors->first('type')) has-error has-feedback @endif col-xs-4">
+                  {{ Form::label('type', 'Protest Type', ['class' => 'control-label']) }}
+                  {{ Form::select('type', [
+                      '' => 'Select One',
+                      'Boycott' => 'Boycott',
+                      'Civil Disobedience' => 'Civil Disobedience',
+                      'March' => 'March'
+                    ], null, [
+                    'class' => 'form-control input-lg',
+                    'tabindex' => '2'
+                  ]) }}
+                  @if($errors->first('type'))
+                    <!-- <span class="glyphicon glyphicon-remove form-control-feedback "></span> -->
+                    <div class="input-error"><small>{{ $errors->first('type') }}</small></div>
+                  @endif
+                </div>
               </div>
 
               <div class="form-group @if($errors->first('history')) has-error has-feedback @endif">
@@ -171,7 +190,7 @@
             </fieldset>
 
             <div class="form-group">
-              {{ Form::submit('Start protest', ['class' => 'btn btn-lg btn-primary' ]) }}
+              {{ Form::submit('Start protest', ['class' => 'btn btn-lg btn-primary', 'tabindex' => '11' ]) }}
             </div>
 
           {{ Form::close() }}

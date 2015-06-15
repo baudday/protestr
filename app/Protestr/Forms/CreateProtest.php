@@ -11,6 +11,7 @@ class CreateProtest extends Form {
    */
   protected $rules = [
     'mission'   => 'required',
+    'type'     => 'required',
     'history'   => 'required',
     'plan'      => 'required',
     'date'      => 'required|date|notPast',
