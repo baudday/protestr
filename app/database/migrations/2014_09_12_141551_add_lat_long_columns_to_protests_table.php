@@ -26,7 +26,7 @@ class AddLatLongColumnsToProtestsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('protests', function()
+		Schema::table('protests', function(Blueprint $table)
 		{
 			$table->dropColumn('latitude');
 			$table->dropColumn('longitude');
