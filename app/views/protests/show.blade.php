@@ -79,11 +79,10 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="updates">
-          <h2>protest updates</h2>
           @if ($protest->updates->count() > 0)
             @foreach ($protest->updates as $update)
-              <h3>{{ $update->title }} <small>{{ $update->created_at }}</small></h3>
-              <p>{{ $update->body }}</p>
+              <h1>{{ $update->title }} <small>{{ $update->created_at }}</small></h1>
+              {{ markdown($update->body) }}
             @endforeach
           @else
             <div style="text-align:center;">

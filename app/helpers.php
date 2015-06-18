@@ -1,5 +1,7 @@
 <?php
 
+use League\CommonMark\CommonMarkConverter;
+
 function splash_background()
 {
     $images = [
@@ -113,4 +115,10 @@ function error_message($message)
 <span class="glyphicon glyphicon-remove form-control-feedback"></span>
 <div class="input-error"><small>$message</small></div>
 EOF;
+}
+
+function markdown($str)
+{
+    $converter = new CommonMarkConverter();
+    return $converter->convertToHtml($str);
 }
