@@ -17,9 +17,19 @@ class Protest extends Eloquent {
 
   protected $guarded = [];
 
+  public function user()
+  {
+    return $this->belongsTo('User');
+  }
+
   public function attendees()
   {
     return $this->belongsToMany('User')->orderBy('username');
+  }
+
+  public function updates()
+  {
+    return $this->hasMany('Update')->orderBy('created_at', 'desc');
   }
 
   public function scopeUpcoming($query)

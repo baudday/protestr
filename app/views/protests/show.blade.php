@@ -6,7 +6,18 @@
 
 @section('content')
   <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-2 left-column">
+      <ul class="nav nav-pills nav-stacked" role="tablist">
+        <li role="presentation" class="active"><a href="#info" aria-controls="info" role="tab" data-toggle="tab">Info</a></li>
+        <li role="presentation"><a href="#updates" aria-controls="updates" role="tab" data-toggle="tab">Updates</a></li>
+        <li role="presentation"><a href="#discussion" aria-controls="discussion" role="tab" data-toggle="tab">Discussion</a></li>
+        @if (Auth::user() && Auth::user()->id == $creator->id)
+        <li role="presentation"><a href="#post-update" aria-controls="post-update" role="tab" data-toggle="tab">Post an Update</a></li>
+        @endif
+      </ul>
+    </div>
+
+    <div class="col-sm-10">
       <div class="protest-header-container">
         <div class="protest-header">
           <h1>{{{ $protest->mission }}}</h1>
@@ -57,11 +68,43 @@
         </div>
       </div>
 
-      <h3>The backstory</h3>
-      <p style="white-space: pre-wrap;">{{{ $protest->history }}}</p>
+      <!-- Begin Tab Stuff -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="info">
+          <h2>The backstory</h2>
+          <p style="white-space: pre-wrap;">{{{ $protest->history }}}</p>
 
-      <h3>Our plan</h3>
-      <p style="white-space: pre-wrap;">{{{ $protest->plan }}}</p>
+          <h2>Our plan</h2>
+          <p style="white-space: pre-wrap;">{{{ $protest->plan }}}</p>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="updates">
+          <h2>protest updates</h2>
+          @if ($protest->updates->count() > 0)
+            @foreach ($protest->updates as $update)
+              <h3>{{ $update->title }} <small>{{ $update->created_at }}</small></h3>
+              <p>{{ $update->body }}</p>
+            @endforeach
+          @else
+            <div style="text-align:center;">
+              <h3><strong>No updates...</strong> yet</h3>
+            </div>
+          @endif
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="discussion"></div>
+
+        @if (Auth::user() && Auth::user()->id == $creator->id)
+        <div role="tabpanel" class="tab-pane" id="post-update">
+          <div class="col-md-8">
+            <h3>post an update</h3>
+            @include('updates.partials.create_form')
+          </div>
+        </div>
+        @endif
+      </div>
+      <!-- End Tab Stuff -->
+
     </div>
   </div>
 
@@ -87,4 +130,8 @@
       </div>
     </div>
   </div>
+@stop
+
+@section('javascript')
+
 @stop

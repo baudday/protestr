@@ -106,3 +106,11 @@ function city_state($city, $state)
     if ($city && $state) return "$city, $state";
     return rtrim("$city $state");
 }
+
+function error_message($message)
+{
+    return <<<EOF
+<span class="glyphicon glyphicon-remove form-control-feedback"></span>
+<div class="input-error"><small>$message</small></div>
+EOF;
+}

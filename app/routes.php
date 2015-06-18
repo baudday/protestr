@@ -55,3 +55,10 @@ Route::get('/messages/{username}', [
   'as' => 'messages.show',
   'uses' => 'MessagesController@show'
 ]);
+
+/**
+ * Updates routes
+ */
+Route::resource('/updates', 'UpdatesController', [
+  'except' => ['index', 'show']
+]);
