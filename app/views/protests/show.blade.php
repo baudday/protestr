@@ -113,13 +113,17 @@
                     <span id="comment-{{ $comment->id }}-count">
                       {{ $comment->upvotes->count() }}
                     </span>
-                    <a class="upvote" href="#" data-id="{{ $comment->id }}"
-                      data-url="{{ route('comments.update', $comment->id) }}">
+                    @if (Auth::check())
+                      <a class="upvote" href="#" data-id="{{ $comment->id }}"
+                        data-url="{{ route('comments.update', $comment->id) }}">
+                        <span class="glyphicon glyphicon-thumbs-up"></span>
+                        <span id="comment-{{ $comment->id }}-vote">
+                          {{ $comment->upvoted(Auth::user()->id) ? 'upvoted' : 'upvote' }}
+                        </span>
+                      </a>
+                    @else
                       <span class="glyphicon glyphicon-thumbs-up"></span>
-                      <span id="comment-{{ $comment->id }}-vote">
-                        {{ $comment->upvoted(Auth::user()->id) ? 'upvoted' : 'upvote' }}
-                      </span>
-                    </a>
+                    @endif
                     <hr>
                   </div>
                 </div>
