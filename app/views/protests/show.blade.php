@@ -92,7 +92,41 @@
           @endif
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="discussion"></div>
+        <div role="tabpanel" class="tab-pane" id="discussion">
+          <div class="row">
+            <div class="col-md-8">
+              <h3>what people are saying...</h3>
+              @foreach($protest->comments as $comment)
+                <div class="row">
+                  <div class="col-md-1">
+                    {{ gravatar_tag($comment->user->email, [
+                      's' => 40, 'd' => 'identicon']) }}
+                  </div>
+                  <div class="col-md-11">
+                    {{ link_to_route('profile', $comment->user->username,
+                      ['username' => $comment->user->username]) }}
+                    <small class="time">
+                      {{ date('Y-m-d G:i:s e', $comment->created_at->timestamp) }}
+                    </small>
+                    <br />
+                    {{ $comment->body }} <br />
+                    <span id="comment-{{ $comment->id }}-count">
+                      {{ $comment->upvotes->count() }}
+                    </span>
+                    <a class="upvote" href="#" data-id="{{ $comment->id }}"
+                      data-url="{{ route('comments.update', $comment->id) }}">
+                      <span class="glyphicon glyphicon-thumbs-up"></span>
+                      <span id="comment-{{ $comment->id }}-vote">
+                        {{ $comment->upvoted(Auth::user()->id) ? 'upvoted' : 'upvote' }}
+                      </span>
+                    </a>
+                    <hr>
+                  </div>
+                </div>
+              @endforeach
+            </div>
+          </div>
+        </div>
 
         @if (Auth::user() && Auth::user()->id == $creator->id)
         <div role="tabpanel" class="tab-pane" id="post-update">
@@ -149,6 +183,21 @@
         $('#update-preview').html(data.body);
       }
     });
+  });
+
+  $('.upvote').on('click', function() {
+    var id = $(this).data('id');
+    var url = $(this).data('url');
+    $.ajax({
+      'method': 'patch',
+      'url': url,
+      success: function(data) {
+        $("#comment-" + id + "-count").html(data.newCount);
+        $("#comment-" + id + "-vote").html(data.status);
+      }
+    });
+
+    return false;
   });
   </script>
 @stop

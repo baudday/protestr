@@ -32,6 +32,12 @@ class Protest extends Eloquent {
     return $this->hasMany('Update')->orderBy('created_at', 'desc');
   }
 
+  public function comments()
+  {
+    return $this->hasMany('Comment')
+      ->orderBy('created_at', 'desc');
+  }
+
   public function scopeUpcoming($query)
   {
     return $query->where('when_date', '>', time());

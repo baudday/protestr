@@ -16,12 +16,16 @@ function splash_background()
     return asset(sprintf('img/%s.png', $img));
 }
 
-function gravatar_tag($email, $options = array())
+function gravatar_tag($email, $options = array(), $attributes = array())
 {
   $hashed_email = md5($email);
   $args = http_build_query($options);
 
-  return sprintf('<img src="//www.gravatar.com/avatar/%s?%s" alt="%s" />', $hashed_email, $args, $email);
+  $html_attrs = implode(" ", array_map(function($v, $k) {
+    return sprintf("%s='%s'", $k, $v);
+  }, $attributes, array_keys($attributes)));
+
+  return sprintf('<img src="//www.gravatar.com/avatar/%s?%s" alt="%s" %s />', $hashed_email, $args, $email, $html_attrs);
 }
 
 function timestring($time)

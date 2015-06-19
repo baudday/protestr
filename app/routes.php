@@ -64,6 +64,13 @@ Route::resource('/updates', 'UpdatesController', [
 ]);
 
 /**
+ * Comments routes
+ */
+Route::resource('/comments', 'CommentsController', [
+  'except' => ['index', 'show']
+]);
+
+/**
  * Markdown route
  */
 Route::post('/markdown/preview', [
