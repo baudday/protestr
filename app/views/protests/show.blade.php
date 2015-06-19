@@ -96,9 +96,15 @@
 
         @if (Auth::user() && Auth::user()->id == $creator->id)
         <div role="tabpanel" class="tab-pane" id="post-update">
-          <div class="col-md-8">
+          <div class="col-md-6">
             <h3>post an update</h3>
+            <hr>
             @include('updates.partials.create_form')
+          </div>
+          <div class="col-md-6">
+            <h3>preview post</h3>
+            <hr>
+            <div id="update-preview"></div>
           </div>
         </div>
         @endif
@@ -133,5 +139,16 @@
 @stop
 
 @section('javascript')
-
+  <script type="text/javascript">
+  $('#update-text').keyup(function() {
+    $.ajax({
+      'method': 'post',
+      'url': '{{ route('markdown.preview') }}',
+      'data': {'body': $('#update-text').val()},
+      'success': function(data) {
+        $('#update-preview').html(data.body);
+      }
+    });
+  });
+  </script>
 @stop

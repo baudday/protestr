@@ -62,3 +62,11 @@ Route::get('/messages/{username}', [
 Route::resource('/updates', 'UpdatesController', [
   'except' => ['index', 'show']
 ]);
+
+/**
+ * Markdown route
+ */
+Route::post('/markdown/preview', [
+  'as' => 'markdown.preview',
+  'uses' => 'MarkdownController@preview'
+]);

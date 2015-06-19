@@ -18,6 +18,7 @@
   {{ Form::label('body', 'What\'s new?', ['class' => 'control-label']) }}
   {{ Form::textarea('body', null, [
     'class' => 'form-control input-lg',
+    'id' => 'update-text',
     'tabindex' => '2',
     'rows' => '5',
     'placeholder' => 'Markdown Supported'
