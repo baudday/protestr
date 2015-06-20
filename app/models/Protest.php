@@ -72,6 +72,7 @@ class Protest extends Eloquent {
   {
     $this->attending($user_id) ? $this->attendees()->detach($user_id)
       : $this->attendees()->attach($user_id);
+    $this->save();
   }
 
   public function attending($user_id)
