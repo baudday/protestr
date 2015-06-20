@@ -23,7 +23,7 @@ class Comment extends Eloquent {
 
   public function toggleVote($user_id)
   {
-    $this->upvoted($user_id) > 0 ? $this->upvotes()->detach($user_id) :
+    $this->upvoted($user_id) ? $this->upvotes()->detach($user_id) :
       $this->upvotes()->attach($user_id);
     $this->save();
   }
