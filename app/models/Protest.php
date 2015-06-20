@@ -68,4 +68,16 @@ class Protest extends Eloquent {
             ]);
   }
 
+  public function toggleAttending($user_id)
+  {
+    $this->attending($user_id) ? $this->attendees()->detach($user_id)
+      : $this->attendees()->attach($user_id);
+  }
+
+  public function attending($user_id)
+  {
+    return $this->attendees()->where('user_id', $user_id)->count() > 0 ?
+      true : false;
+  }
+
 }

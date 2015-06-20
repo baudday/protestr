@@ -146,11 +146,7 @@ class ProtestsController extends \BaseController {
 	{
 		$input = Input::all();
 		$protest = Protest::find($id);
-		if (isset($input['attendees'])) {
-			$input['attendees'] == 'add'
-				? $protest->attendees()->attach(Auth::user()->id)
-				: $protest->attendees()->detach(Auth::user()->id);
-		}
+		$protest->toggleAttending(Auth::user()->id);
 		return Redirect::back();
 	}
 
