@@ -95,39 +95,7 @@
         <div role="tabpanel" class="tab-pane" id="discussion">
           <div class="row">
             <div class="col-md-8">
-              <h3>what people are saying...</h3>
-              @foreach($protest->comments as $comment)
-                <div class="row">
-                  <div class="col-md-1">
-                    {{ gravatar_tag($comment->user->email, [
-                      's' => 40, 'd' => 'identicon']) }}
-                  </div>
-                  <div class="col-md-11">
-                    {{ link_to_route('profile', $comment->user->username,
-                      ['username' => $comment->user->username]) }}
-                    <small class="time">
-                      {{ date('Y-m-d G:i:s e', $comment->created_at->timestamp) }}
-                    </small>
-                    <br />
-                    {{ $comment->body }} <br />
-                    <span id="comment-{{ $comment->id }}-count">
-                      {{ $comment->upvotes->count() }}
-                    </span>
-                    @if (Auth::check())
-                      <a class="upvote" href="#" data-id="{{ $comment->id }}"
-                        data-url="{{ route('comments.update', $comment->id) }}">
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span id="comment-{{ $comment->id }}-vote">
-                          {{ $comment->upvoted(Auth::user()->id) ? 'upvoted' : 'upvote' }}
-                        </span>
-                      </a>
-                    @else
-                      <span class="glyphicon glyphicon-thumbs-up"></span>
-                    @endif
-                    <hr>
-                  </div>
-                </div>
-              @endforeach
+              @include('protests.partials.comments')
             </div>
           </div>
         </div>
@@ -174,6 +142,21 @@
       </div>
     </div>
   </div>
+
+  <!-- Reply form modal -->
+  <div class="modal fade" id="reply-form" tabindex="-1" role="dialog" aria-labelledby="reply-form-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="reply-form-label">reply to comment</h4>
+        </div>
+        <div class="modal-body">
+          @include('comments.partials.create_form')
+        </div>
+      </div>
+    </div>
+  </div>
 @stop
 
 @section('javascript')
@@ -202,6 +185,13 @@
     });
 
     return false;
+  });
+
+  $('.reply').on('click', function() {
+    console.log($(this).data('parent-id'));
+    // long selector to make sure we get the one in the modal :(
+    $('#reply-form > div > div > div.modal-body > form > input.parent-comment-field')
+      .val($(this).data('parent-id'));
   });
   </script>
 @stop

@@ -35,7 +35,7 @@ class Protest extends Eloquent {
   public function comments()
   {
     return $this->hasMany('Comment')
-      ->orderBy('created_at', 'desc');
+      ->where('parent', 0);
   }
 
   public function scopeUpcoming($query)

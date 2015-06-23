@@ -66,7 +66,7 @@ Route::resource('/updates', 'UpdatesController', [
 /**
  * Comments routes
  */
-Route::resource('/comments', 'CommentsController', [
+Route::resource('protest.comments', 'CommentsController', [
   'except' => ['index', 'show']
 ]);
 

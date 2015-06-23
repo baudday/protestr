@@ -34,4 +34,17 @@ class Comment extends Eloquent {
       true : false;
   }
 
+  public function replies()
+  {
+    return $this->hasMany('Comment', 'parent')->relevant();
+  }
+
+  public function scopeRelevant($query)
+  {
+    return $query->select(DB::raw('comments.*, count(comment_user.comment_id) as upvotes'))
+          ->leftJoin('comment_user', 'comments.id', '=', 'comment_user.comment_id')
+          ->groupBy('id')
+          ->orderBy('upvotes', 'desc');
+  }
+
 }

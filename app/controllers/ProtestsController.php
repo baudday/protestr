@@ -119,8 +119,9 @@ class ProtestsController extends \BaseController {
 	public function show($id)
 	{
 		$protest = Protest::with('attendees', 'updates', 'comments')->findOrFail($id);
+		$comments = $protest->comments()->relevant()->with('replies')->get();
 		$creator = $protest->user;
-		return View::make('protests.show', compact('protest', 'creator'));
+		return View::make('protests.show', compact('protest', 'creator', 'comments'));
 	}
 
 
