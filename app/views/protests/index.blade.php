@@ -120,7 +120,6 @@
 
 @section('javascript')
   {{ HTML::script('//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js') }}
-  {{ HTML::script('//maps.googleapis.com/maps/api/js?key=AIzaSyC-fp-wfsRUi-JeIiaHGFuXNjsCHe1pWVU')}}
   {{ HTML::script('js/controllers/protests/protestMainCtrl.js') }}
   {{ HTML::script('js/services/protests/protestService.js') }}
   {{ HTML::script('js/services/locationService.js') }}

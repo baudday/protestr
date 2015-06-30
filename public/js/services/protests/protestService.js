@@ -7,9 +7,10 @@ angular.module('protestService', [])
       },
 
       save: function(data, callback) {
-        var geocoder = new google.maps.Geocoder();
-        var address = data.address;
-        geocoder.geocode({ 'address': address }, callback);
+        var url = 'api/v1/geocode?address=' + encodeURIComponent(data.address);
+        $http.get(url).success(function(response, status) {
+          callback(response.coordinates, response.meta);
+        });
       }
     }
   });

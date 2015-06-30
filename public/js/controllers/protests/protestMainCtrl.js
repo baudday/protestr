@@ -34,9 +34,9 @@ angular.module('protestMainCtrl', [])
       $scope.noResults = true;
 
       // Geocode input
-      Protest.save($scope.locationData, function(results, status) {
+      Protest.save($scope.locationData, function(coordinates, meta) {
           // Fix for zero results
-          if (status === 'ZERO_RESULTS') {
+          if (!meta.match) {
             $scope.$apply(function() {
               $scope.loading = false;
               $scope.error = true;
@@ -45,8 +45,8 @@ angular.module('protestMainCtrl', [])
             });
           }
           else {
-            var lat = results[0].geometry.location.A;
-            var lon = results[0].geometry.location.F;
+            var lat = coordinates.latitude;
+            var lon = coordinates.longitude;
 
             // Submit lat/lon to server
             var params = {
