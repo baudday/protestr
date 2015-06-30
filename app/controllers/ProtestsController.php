@@ -24,10 +24,24 @@ class ProtestsController extends \BaseController {
 	 */
 	public function index()
 	{
+		if (Input::get('format') == 'json')
+		{
+			$protests['global'] = Protest::popular()->upcoming()->take(3)->get();
+			$meta = [
+				'badLocation' => false,
+				'noResults' => false,
+				'noLocal' => false
+			];
+		}
+
 		// Geolocation is king
 		if (Input::get('lat') && Input::get('lon')) {
 			$lat = Input::get('lat');
 			$lon = Input::get('lon');
+			$location = [
+				'latitude' => $lat,
+				'longitude' => $lon
+			];
 		}
 
 		// Try GeoIP if geolocation fails
@@ -39,8 +53,8 @@ class ProtestsController extends \BaseController {
 				$lat = $row->location->latitude;
 				$lon = $row->location->longitude;
 				$location = [
-					'city'			=> $row->city->name,
-					'state'			=> $row->mostSpecificSubdivision->isoCode
+					'latitude'			=> $lat,
+					'longitude'			=> $lon
 				];
 			}
 			// All else failed, ask the user to enter their location
@@ -48,10 +62,10 @@ class ProtestsController extends \BaseController {
 			{
 				if (Input::get('format') == 'json')
 				{
-					$response = Response::make([
-					'error' => "Couldn't determine location"
-					], 500);
-					return $response;
+					$protests['local'] = [];
+					$meta['badLocation'] = true;
+					$meta['noResults'] = $protests['global']->count() < 1;
+					return compact('meta', 'protests', 'location');
 				}
 
 				return View::make('protests.index');
@@ -60,9 +74,12 @@ class ProtestsController extends \BaseController {
 
 
 		if (Input::get('format') == 'json') {
-			$protests = Protest::near($lat, $lon)->popular()->upcoming()->get();
-			$top = $protests->shift();
-			return compact('protests', 'top', 'location');
+			$local = Protest::near($lat, $lon)->popular()->upcoming()->take(3)->get();
+			$protests['local'] = $local;
+			$meta['noLocal'] = $local->count() < 1;
+			$meta['noResults'] = $meta['noLocal'] && $protests['global']->count() < 1;
+
+			return compact('meta', 'protests', 'location');
 		}
 
 		return View::make('protests.index');

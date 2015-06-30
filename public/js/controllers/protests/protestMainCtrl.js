@@ -17,26 +17,13 @@ angular.module('protestMainCtrl', [])
 
       Protest.get(url)
         .success(function(data) {
-          if (!data.top) {
-            $scope.loading = false;
-            $scope.error = true;
-            $scope.noResults = true;
-            $scope.badLocation = false;
-          }
-          else {
-            $scope.data = {
-              top: data.top,
-              cols: [
-                data.protests.splice(0, Math.ceil(data.protests.length / 2)),
-                data.protests
-              ]
-            };
-            $scope.loading = false;
-          }
-        })
-        .error(function(data) {
+          var protests = data.protests;
           $scope.loading = false;
-          $scope.error = true;
+          $scope.data = protests;
+          $scope.error = data.meta.noResults || data.meta.badLocation || data.meta.noLocal;
+          $scope.noResults = data.meta.noResults;
+          $scope.noLocal = data.meta.noLocal;
+          $scope.badLocation = data.meta.badLocation;
         });
     });
 
@@ -58,8 +45,8 @@ angular.module('protestMainCtrl', [])
             });
           }
           else {
-            var lat = results[0].geometry.location.k;
-            var lon = results[0].geometry.location.B;
+            var lat = results[0].geometry.location.A;
+            var lon = results[0].geometry.location.F;
 
             // Submit lat/lon to server
             var params = {
@@ -71,26 +58,13 @@ angular.module('protestMainCtrl', [])
 
             Protest.get(url)
               .success(function(data) {
-                if (!data.top) {
-                  $scope.loading = false;
-                  $scope.error = true;
-                  $scope.noResults = true;
-                  $scope.badLocation = false;
-                }
-                else {
-                  $scope.data = {
-                    top: data.top,
-                    cols: [
-                      data.protests.splice(0, Math.ceil(data.protests.length / 2)),
-                      data.protests
-                    ]
-                  };
-                  $scope.loading = false;
-                }
-              })
-              .error(function(data) {
+                var protests = data.protests;
                 $scope.loading = false;
-                $scope.error = true;
+                $scope.data = protests;
+                $scope.error = data.meta.noResults || data.meta.badLocation || data.meta.noLocal;
+                $scope.noResults = data.meta.noResults;
+                $scope.noLocal = data.meta.noLocal;
+                $scope.badLocation = data.meta.badLocation;
               });
           }
         });

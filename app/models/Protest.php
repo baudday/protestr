@@ -45,9 +45,9 @@ class Protest extends Eloquent {
 
   public function scopePopular($query)
   {
-    return $query->select(DB::raw('*, count(*) as attendeeCount'))
-          ->join('protest_user', 'protests.id', '=', 'protest_user.protest_id')
-          ->groupBy('protest_id')
+    return $query->select(DB::raw('protests.*, count(protest_user.protest_id) as attendeeCount'))
+          ->leftJoin('protest_user', 'protests.id', '=', 'protest_user.protest_id')
+          ->groupBy('id')
           ->orderBy('attendeeCount', 'desc');
   }
 
@@ -66,6 +66,11 @@ class Protest extends Eloquent {
               min($lon-$lon_radius, $lon+$lon_radius),
               max($lon-$lon_radius, $lon+$lat_radius)
             ]);
+  }
+
+  public function scopeLocationLess($query)
+  {
+    return $query->whereLatitude(0)->whereLongitude(0);
   }
 
   public function toggleAttending($user_id)
