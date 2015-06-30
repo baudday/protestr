@@ -7,6 +7,7 @@ class ProtestsController extends \BaseController {
 
 	const DEFAULT_OFFSET = 0;
 	const DEFAULT_LIMIT = 10;
+	const UPPER_LIMIT = 100;
 
 
 	/**
@@ -35,10 +36,8 @@ class ProtestsController extends \BaseController {
 		];
 
 		if ($global) {
-			$limit = \Input::get('glob_limit') > 0
-				? abs(\Input::get('glob_limit')) : self::DEFAULT_LIMIT;
-			$offset = \Input::get('glob_offset') !== null
-				? \Input::get('glob_offset') : self::DEFAULT_OFFSET;
+			$limit = $this->get_limit(\Input::get('glob_limit'));
+			$offset = $this->get_offset(\Input::get('glob_offset'));
 
 			$protests['global'] = \Protest::popular()->upcoming()
 				->take($limit)->offset($offset)->get();
@@ -47,10 +46,8 @@ class ProtestsController extends \BaseController {
 		}
 
 		if ($local) {
-			$limit = \Input::get('loc_limit') > 0
-				? abs(\Input::get('loc_limit')) : self::DEFAULT_LIMIT;
-			$offset = \Input::get('loc_offset') !== null
-				? \Input::get('loc_offset') : self::DEFAULT_OFFSET;
+			$limit = $this->get_limit(\Input::get('loc_limit'));
+			$offset = $this->get_offset(\Input::get('loc_offset'));
 
 			// Geolocation is king
 			if (\Input::get('lat') && \Input::get('lon')) {
@@ -161,6 +158,19 @@ class ProtestsController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	private function get_limit($limit)
+	{
+		return
+			$limit > 0 ?
+				$limit <= self::UPPER_LIMIT ? abs($limit) : self::UPPER_LIMIT
+			: self::DEFAULT_LIMIT;
+	}
+
+	private function get_offset($offset)
+	{
+		return $offset !== null ? $offset : self::DEFAULT_OFFSET;
 	}
 
 
