@@ -6,16 +6,16 @@ angular.module('protestMainCtrl', [])
     $scope.error = false;
     $scope.badLocation = true;
     $scope.noResults = true;
+    $scope.url = '/api/v1/protests?local=true&global=true&loc_limit=10&glob_limit=10';
 
     Location.getLocation(function(position) {
-      var url = '/protests?format=json';
       if(position.coords) {
         var lat = position.coords.latitude,
             lon = position.coords.longitude;
-        url += '&lat=' + lat + '&lon=' + lon;
+        $scope.url += '&lat=' + lat + '&lon=' + lon;
       }
 
-      Protest.get(url)
+      Protest.get($scope.url)
         .success(function(data) {
           var protests = data.protests;
           $scope.loading = false;
@@ -54,9 +54,9 @@ angular.module('protestMainCtrl', [])
               lon: lon
             };
 
-            var url = '/protests?format=json&' + $.param(params);
+            $scope.url += '&' + $.param(params);
 
-            Protest.get(url)
+            Protest.get($scope.url)
               .success(function(data) {
                 var protests = data.protests;
                 $scope.loading = false;

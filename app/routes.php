@@ -77,3 +77,13 @@ Route::post('/markdown/preview', [
   'as' => 'markdown.preview',
   'uses' => 'MarkdownController@preview'
 ]);
+
+/**
+ * Api routes
+ */
+Route::group([
+  'namespace' => 'Api',
+  'prefix' => 'api/v1'
+], function() {
+  require('routes/api.php');
+});
