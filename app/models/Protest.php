@@ -22,6 +22,11 @@ class Protest extends Eloquent {
     return $this->belongsTo('User');
   }
 
+  public function topic()
+  {
+    return $this->belongsTo('Topic');
+  }
+
   public function attendees()
   {
     return $this->belongsToMany('User')->orderBy('username');

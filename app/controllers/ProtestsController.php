@@ -35,7 +35,13 @@ class ProtestsController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('protests.create');
+		$data = Topic::all()->toArray();
+		$topics[''] = 'Select Topic';
+		foreach ($data as $key => $value) {
+			$topics[$value['id']] = $value['name'];
+		}
+
+		return View::make('protests.create', compact('topics'));
 	}
 
 
@@ -62,7 +68,9 @@ class ProtestsController extends \BaseController {
 			$data['longitude'] = $coords->lng;
 		}
 
-		unset($data['date'], $data['time'], $data['timezone']);
+		$data['topic_id'] = $data['topic'];
+
+		unset($data['date'], $data['time'], $data['timezone'], $data['topic']);
 		$protest = Protest::create($data);
 		$protest->attendees()->attach(Auth::user()->id);
 		return Redirect::route('protests.show', ['id' => $protest->id]);

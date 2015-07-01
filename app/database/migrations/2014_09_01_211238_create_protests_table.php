@@ -18,6 +18,7 @@ class CreateProtestsTable extends Migration {
 			$table->integer('user_id')->references('id')->on('users');
 			$table->string('mission')->index();
 			$table->string('type')->index();
+			$table->integer('topic_id')->index();
 			$table->text('history');
 			$table->text('plan');
 			$table->string('website');

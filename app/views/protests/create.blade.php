@@ -20,7 +20,7 @@
             <fieldset>
 
               <div class="row">
-                <div class="form-group @if($errors->first('mission')) has-error has-feedback @endif col-xs-8">
+                <div class="form-group @if($errors->first('mission')) has-error has-feedback @endif col-xs-12">
                   {{ Form::label('mission', 'Your mission', ['class' => 'control-label']) }}
                   {{ Form::text('mission', null, [
                     'class' => 'form-control input-lg',
@@ -33,11 +33,13 @@
                   @endif
                   <small>This should be a short call to action. Why are you arranging this protest?</small>
                 </div>
+              </div>
 
-                <div class="form-group @if($errors->first('type')) has-error has-feedback @endif col-xs-4">
+              <div class="row">
+                <div class="form-group @if($errors->first('type')) has-error has-feedback @endif col-xs-6">
                   {{ Form::label('type', 'Protest Type', ['class' => 'control-label']) }}
                   {{ Form::select('type', [
-                      '' => 'Select One',
+                      '' => 'Select Type',
                       'Boycott' => 'Boycott',
                       'Civil Disobedience' => 'Civil Disobedience',
                       'March' => 'March'
@@ -48,6 +50,18 @@
                   @if($errors->first('type'))
                     <!-- <span class="glyphicon glyphicon-remove form-control-feedback "></span> -->
                     <div class="input-error"><small>{{ $errors->first('type') }}</small></div>
+                  @endif
+                </div>
+
+                <div class="form-group @if($errors->first('topic')) has-error has-feedback @endif col-xs-6">
+                  {{ Form::label('topic', 'Protest Topic', ['class' => 'control-label']) }}
+                  {{ Form::select('topic', $topics, null, [
+                    'class' => 'form-control input-lg',
+                    'tabindex' => '2'
+                  ]) }}
+                  @if($errors->first('topic'))
+                    <!-- <span class="glyphicon glyphicon-remove form-control-feedback "></span> -->
+                    <div class="input-error"><small>{{ $errors->first('topic') }}</small></div>
                   @endif
                 </div>
               </div>
