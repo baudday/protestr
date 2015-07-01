@@ -59,7 +59,7 @@ class Protest extends Eloquent {
   public function scopeNear($query, $lat, $lon)
   {
     $MILE_LAT = 1/69.11;
-    $MILE_LON = 1/(69.11*cos($lat));
+    $MILE_LON = 1/(69.11*cos(deg2rad($lat)));
     $lat_radius = 10*$MILE_LAT;
     $lon_radius = 10*$MILE_LON;
 
