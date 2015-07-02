@@ -9,13 +9,6 @@
     {{ HTML::style('css/global.css') }}
     {{ HTML::style('css/forms.css') }}
     @yield('css')
-  </head>
-  <body>
-    @include('layouts.partials.nav')
-
-    <div class="container">
-      @yield('content')
-    </div>
 
     {{ HTML::script('packages/jquery/jquery.min.js') }}
     {{ HTML::script('packages/bootstrap/js/bootstrap.min.js') }}
@@ -23,5 +16,12 @@
     {{ HTML::script('js/timezones.js') }}
     {{ HTML::script('js/global.js') }}
     @yield('javascript')
+  </head>
+  <body>
+    @include('layouts.partials.nav')
+
+    <div class="container">
+      @yield('content')
+    </div>
   </body>
 </html>

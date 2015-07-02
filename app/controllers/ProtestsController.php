@@ -24,7 +24,8 @@ class ProtestsController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('protests.index');
+		$topics = \Topic::all();
+		return View::make('protests.index', compact('topics'));
 	}
 
 
