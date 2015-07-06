@@ -159,7 +159,7 @@
   </div>
 @stop
 
-@section('javascript')
+@section('javascript-after')
   <script type="text/javascript">
   $('#update-text').keyup(function() {
     $.ajax({

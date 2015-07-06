@@ -1,6 +1,12 @@
 <div role="tabpanel" class="tab-pane" id="local">
-  <h1>Trending near you</h1>
-  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <ul class="nav nav-pills sort-menu">
+          <li role="presentation" class="active"><a href="#trending-local">Trending</a></li>
+          <li role="presentation"><a href="#recent-local">Most Recent</a></li>
+      </ul>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-12">
       <div class="row" ng-show="badLocation">
