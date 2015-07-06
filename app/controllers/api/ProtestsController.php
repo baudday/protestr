@@ -47,7 +47,7 @@ class ProtestsController extends \BaseController {
 			$q = \Protest::upcoming();
 
 			if ($sort == 'newest') {
-				$q = $q->orderBy('created_at', 'desc');
+				$q = $q->mostRecent();
 			}
 			else {
 				$q = $q->popular();
@@ -101,7 +101,7 @@ class ProtestsController extends \BaseController {
 			$q = \Protest::near($lat, $lon)->upcoming();
 
 			if ($sort == 'newest') {
-				$q = $q->orderBy('created_at', 'desc');
+				$q = $q->mostRecent();
 			}
 			else {
 				$q = $q->popular();

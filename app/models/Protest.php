@@ -56,6 +56,14 @@ class Protest extends Eloquent {
           ->orderBy('attendeeCount', 'desc');
   }
 
+  public function scopeMostRecent($query)
+  {
+    return $query->select(DB::raw('protests.*, count(protest_user.protest_id) as attendeeCount'))
+          ->leftJoin('protest_user', 'protests.id', '=', 'protest_user.protest_id')
+          ->groupBy('id')
+          ->orderBy('created_at', 'desc');
+  }
+
   public function scopeNear($query, $lat, $lon)
   {
     $MILE_LAT = 1/69.11;
