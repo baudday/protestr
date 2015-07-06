@@ -1,7 +1,7 @@
 function getTimezone () {
   var ts = new Date().toTimeString();
-  var patt = /\((\w+)\)/g;
-  return patt.exec(ts)[1];
+  var patt = /\((.*)\)/g;
+  return patt.exec(ts)[1].match(/\b(\w)/g).join('');
 }
 
 function getFormat (string) {

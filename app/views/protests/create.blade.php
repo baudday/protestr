@@ -214,7 +214,7 @@
   </div>
 @stop
 
-@section('javascript')
+@section('javascript-after')
   {{ HTML::script('js/jstz.min.js') }}
   <script type="text/javascript">
     var tz = getTimezone();

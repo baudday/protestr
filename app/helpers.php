@@ -94,7 +94,7 @@ function states()
 function timezones()
 {
     $a = $b = array_map("strtoupper", array_keys(DateTimeZone::listAbbreviations()));
-    return array_combine($a, $b);
+    return array_merge(['' => 'Select'], array_combine($a, $b));
 }
 
 function person_or_people($value)
