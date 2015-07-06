@@ -21,6 +21,7 @@ class ProtestsController extends \BaseController {
 	 * @param: int $loc_offset optional local results offset
 	 * @param: double $lat optional user's latitude
 	 * @param: double $lon optional user's longitude
+	 * @param: string $sort optional how to sort the results
 	 *
 	 * @return JSON Response
 	 */
@@ -28,6 +29,7 @@ class ProtestsController extends \BaseController {
 	{
 		$global = filter_var(\Input::get('global'), FILTER_VALIDATE_BOOLEAN);
 		$local = filter_var(\Input::get('local'), FILTER_VALIDATE_BOOLEAN);
+		$sort = \Input::get('sort');
 
 		$meta = [
 			'badLocation' => false,
@@ -39,8 +41,13 @@ class ProtestsController extends \BaseController {
 			$limit = $this->get_limit(\Input::get('glob_limit'));
 			$offset = $this->get_offset(\Input::get('glob_offset'));
 
-			$protests['global'] = \Protest::popular()->upcoming()
-				->take($limit)->offset($offset)->get();
+			if ($sort == 'newest') {
+				$protests['global'] = \Protest::upcoming()->take($limit)->offset($offset)->orderBy('created_at', 'desc')->get();
+			}
+			else {
+				$protests['global'] = \Protest::popular()->upcoming()
+					->take($limit)->offset($offset)->get();
+			}
 
 			$meta['noResults'] = $meta['noResults'] && $protests['global']->count() < 1;
 		}
@@ -81,8 +88,15 @@ class ProtestsController extends \BaseController {
 				}
 			}
 
-			$protests['local'] = \Protest::near($lat, $lon)->popular()->upcoming()
-				->take($limit)->offset($offset)->get();
+			if ($sort == 'newest') {
+				$protests['local'] = \Protest::near($lat, $lon)->upcoming()
+					->take($limit)->offset($offset)->orderBy('created_at', 'desc')->get();
+			}
+			else {
+				$protests['local'] = \Protest::near($lat, $lon)->popular()->upcoming()
+					->take($limit)->offset($offset)->get();
+			}
+
 			$meta['noLocal'] = $protests['local']->count() < 1;
 			$meta['noResults'] = $meta['noResults'] && $meta['noLocal'];
 		}

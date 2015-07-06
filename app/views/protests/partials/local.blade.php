@@ -2,8 +2,12 @@
   <div class="row">
     <div class="col-xs-12">
       <ul class="nav nav-pills sort-menu">
-          <li role="presentation" class="active"><a href="#trending-local">Trending</a></li>
-          <li role="presentation"><a href="#recent-local">Most Recent</a></li>
+          <li role="presentation" ng-class="getClass('/local/trending')">
+            <a href="#local/trending" ng-click="getLocal('trending')">Trending</a>
+          </li>
+          <li role="presentation" ng-class="getClass('/local/newest')">
+            <a href="#local/newest" ng-click="getLocal('newest')">Most Recent</a>
+          </li>
       </ul>
     </div>
   </div>
