@@ -6,7 +6,7 @@ angular.module('protestMainCtrl', [])
     $scope.error = false;
     $scope.badLocation = true;
     $scope.noResults = true;
-    $scope.url = '/api/v1/protests';
+    $scope.url = window.apiUrl;
 
     $scope.submitLocation = function() {
       $scope.loading = true;
@@ -35,7 +35,7 @@ angular.module('protestMainCtrl', [])
               lon: lon
             };
 
-            $scope.url += '&' + $.param(params);
+            $scope.url += $.param(params);
 
             Protest.get($scope.url)
               .success(function(data) {
@@ -52,13 +52,13 @@ angular.module('protestMainCtrl', [])
     }
 
     $scope.getGlobal = function(sort) {
-      var url = $scope.url + '?global=true&glob_limit=10&sort=' + sort;
+      var url = $scope.url + 'global=true&glob_limit=10&sort=' + sort;
       $scope.resetIt();
       Protest.get(url).success($scope.populate);
     }
 
     $scope.getLocal = function(sort) {
-      var url = $scope.url + '?local=true&loc_limit=10&sort=' + sort;
+      var url = $scope.url + 'local=true&loc_limit=10&sort=' + sort;
       $scope.resetIt();
 
       Location.getLocation(function(position) {

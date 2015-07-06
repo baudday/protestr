@@ -43,6 +43,8 @@ Route::resource('/sessions', 'SessionsController', [
  */
 Route::resource('/protests', 'ProtestsController');
 
+Route::get('/topics/{slug}', ['as' => 'topics.show', 'uses' => 'TopicsController@show']);
+
 
 /**
  * Messages routes

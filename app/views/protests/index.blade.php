@@ -22,7 +22,7 @@
 
       <div style="text-align: center;" ng-show="loading">
         <h2>
-          <img src="img/loader.gif" width="20" /> fetching protests...<br />
+          {{ HTML::image('img/loader.gif', 'Loading', ['width' => '20']) }} fetching protests...<br />
           <small>For best results, please allow us to use your location</small>
         </h2>
       </div>
@@ -35,7 +35,7 @@
           <hr>
           <ul class="nav nav-pills nav-stacked">
             @foreach($topics as $topic)
-              <li role="presentation"><a href="#">{{ $topic->name }}</a></li>
+              <li role="presentation" class = "{{ isset($slug) && $slug == $topic->slug ? 'active' : ''}}">{{ link_to_route('topics.show', $topic->name, $topic->slug) }}</li>
             @endforeach
           </ul>
         </div>
@@ -45,6 +45,13 @@
 @stop
 
 @section('javascript')
+  <script type="text/javascript">
+    @if(isset($page_topic))
+      window.apiUrl = '/api/v1/protests?topic={{ $page_topic->slug }}&'
+    @else
+      window.apiUrl = '/api/v1/protests?';
+    @endif
+  </script>
   {{ HTML::script('//ajax.googleapis.com/ajax/libs/angularjs/1.0.1/angular.min.js') }}
   {{ HTML::script('js/controllers/protests/protestMainCtrl.js') }}
   {{ HTML::script('js/services/protests/protestService.js') }}

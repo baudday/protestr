@@ -22,6 +22,7 @@ class ProtestsController extends \BaseController {
 	 * @param: double $lat optional user's latitude
 	 * @param: double $lon optional user's longitude
 	 * @param: string $sort optional how to sort the results
+	 * @param: string $topic optional which topic to get protests from
 	 *
 	 * @return JSON Response
 	 */
@@ -30,6 +31,8 @@ class ProtestsController extends \BaseController {
 		$global = filter_var(\Input::get('global'), FILTER_VALIDATE_BOOLEAN);
 		$local = filter_var(\Input::get('local'), FILTER_VALIDATE_BOOLEAN);
 		$sort = \Input::get('sort');
+		if (\Input::get('topic'))
+			$topic = \Topic::where('slug', \Input::get('topic'))->firstOrFail();
 
 		$meta = [
 			'badLocation' => false,
@@ -41,13 +44,20 @@ class ProtestsController extends \BaseController {
 			$limit = $this->get_limit(\Input::get('glob_limit'));
 			$offset = $this->get_offset(\Input::get('glob_offset'));
 
+			$q = \Protest::upcoming();
+
 			if ($sort == 'newest') {
-				$protests['global'] = \Protest::upcoming()->take($limit)->offset($offset)->orderBy('created_at', 'desc')->get();
+				$q = $q->orderBy('created_at', 'desc');
 			}
 			else {
-				$protests['global'] = \Protest::popular()->upcoming()
-					->take($limit)->offset($offset)->get();
+				$q = $q->popular();
 			}
+
+			if (isset($topic)) {
+				$q = $q->where('topic_id', $topic->id);
+			}
+
+			$protests['global'] = $q->take($limit)->offset($offset)->get();
 
 			$meta['noResults'] = $meta['noResults'] && $protests['global']->count() < 1;
 		}
@@ -88,14 +98,20 @@ class ProtestsController extends \BaseController {
 				}
 			}
 
+			$q = \Protest::near($lat, $lon)->upcoming();
+
 			if ($sort == 'newest') {
-				$protests['local'] = \Protest::near($lat, $lon)->upcoming()
-					->take($limit)->offset($offset)->orderBy('created_at', 'desc')->get();
+				$q = $q->orderBy('created_at', 'desc');
 			}
 			else {
-				$protests['local'] = \Protest::near($lat, $lon)->popular()->upcoming()
-					->take($limit)->offset($offset)->get();
+				$q = $q->popular();
 			}
+
+			if (isset($topic)) {
+				$q = $q->where('topic_id', $topic->id);
+			}
+
+			$protests['local'] = $q->take($limit)->offset($offset)->get();
 
 			$meta['noLocal'] = $protests['local']->count() < 1;
 			$meta['noResults'] = $meta['noResults'] && $meta['noLocal'];
