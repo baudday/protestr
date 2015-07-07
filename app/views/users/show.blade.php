@@ -13,7 +13,7 @@
   <div class="row">
     <div class="col-md-2">
       <h1>{{{ $user->username }}}</h1>
-      {{ gravatar_tag($user->email, array('s' => '132', 'd' => 'identicon')) }}
+      {{ gravatar_tag($user->email, array('s' => '132', 'd' => 'identicon'), ['class' => 'img-circle']) }}
       @if(Auth::check())
         @if(Auth::user()->username == $user->username)
           <h5><a href="#"><span class="glyphicon glyphicon-pencil"></span> edit profile</a></h5>

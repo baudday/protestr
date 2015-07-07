@@ -22,7 +22,7 @@
         @if(Auth::check())
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              {{ gravatar_tag(Auth::user()->email, array('s' => 20, 'd' => 'identicon')) }}
+              {{ gravatar_tag(Auth::user()->email, array('s' => 20, 'd' => 'identicon'), ['class' => 'img-circle']) }}
               {{ Auth::user()->username }}
               @if(Auth::user()->unreadMessageCount() > 0)
                 <span class="badge">{{ Auth::user()->unreadMessageCount() }}</span>
