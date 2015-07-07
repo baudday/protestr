@@ -29,24 +29,10 @@ angular.module('protestMainCtrl', [])
             var lat = coordinates.latitude;
             var lon = coordinates.longitude;
 
-            // Submit lat/lon to server
-            var params = {
-              lat: lat,
-              lon: lon
-            };
+            $scope.lat = lat;
+            $scope.lon = lon;
 
-            $scope.url += $.param(params);
-
-            Protest.get($scope.url)
-              .success(function(data) {
-                var protests = data.protests;
-                $scope.loading = false;
-                $scope.data = protests;
-                $scope.error = data.meta.noResults || data.meta.badLocation || data.meta.noLocal;
-                $scope.noResults = data.meta.noResults;
-                $scope.noLocal = data.meta.noLocal;
-                $scope.badLocation = data.meta.badLocation;
-              });
+            $scope.getLocal('trending');
           }
         });
     }
@@ -67,8 +53,11 @@ angular.module('protestMainCtrl', [])
               lon = position.coords.longitude;
           $scope.lat = lat;
           $scope.lon = lon;
-          url += '&lat=' + lat + '&lon=' + lon;
         }
+
+        if ($scope.lat && $scope.lon)
+          url += '&lat=' + $scope.lat + '&lon=' + $scope.lon;
+
         Protest.get(url).success($scope.populate);
       });
 
