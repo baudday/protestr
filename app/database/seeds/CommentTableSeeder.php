@@ -13,12 +13,15 @@ class CommentTableSeeder extends Seeder {
 
 		foreach($protests as $protest)
 		{
-            $user = User::orderByRaw("RAND()")->first();
-			Comment::create([
-                'user_id' => $user->id,
-                'protest_id' => $protest->id,
-                'body' => $faker->text
-			]);
+            foreach(range(1, rand(1, 5)) as $index)
+            {
+                $user = User::orderByRaw("RAND()")->first();
+    			Comment::create([
+                    'user_id' => $user->id,
+                    'protest_id' => $protest->id,
+                    'body' => $faker->text
+    			]);
+            }
 		}
 	}
 
