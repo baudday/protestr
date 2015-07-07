@@ -46,7 +46,7 @@
   </div>
 @stop
 
-@section('javascript')
+@section('javascript-after')
   <script type="text/javascript">
     var objDiv = document.getElementById("chat-window");
     objDiv.scrollTop = objDiv.scrollHeight;
