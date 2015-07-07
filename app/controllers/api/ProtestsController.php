@@ -44,7 +44,7 @@ class ProtestsController extends \BaseController {
 			$limit = $this->get_limit(\Input::get('glob_limit'));
 			$offset = $this->get_offset(\Input::get('glob_offset'));
 
-			$q = \Protest::upcoming();
+			$q = \Protest::upcoming()->with('Topic');
 
 			if ($sort == 'newest') {
 				$q = $q->mostRecent();
@@ -98,7 +98,7 @@ class ProtestsController extends \BaseController {
 				}
 			}
 
-			$q = \Protest::near($lat, $lon)->upcoming();
+			$q = \Protest::near($lat, $lon)->upcoming()->with('Topic');
 
 			if ($sort == 'newest') {
 				$q = $q->mostRecent();

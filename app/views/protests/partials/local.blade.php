@@ -52,7 +52,9 @@
             <a href="/protests/<% protest.id %>"><% protest.mission %></a>
             <small><% UTIL.time(protest.when_date) %></small>
           </h2>
-          <h4><% protest.type %></h4>
+          <h4>
+            <a href="/topics/<% protest.topic.slug %>"><% protest.topic.name %></a> | <% protest.type %>
+          </h4>
           <p><% protest.history.substring(0, 140) +"..." %></p>
           <p>
             <small><% protest.attendeeCount %> attending</small><br />

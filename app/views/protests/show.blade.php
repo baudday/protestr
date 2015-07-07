@@ -21,7 +21,7 @@
       <div class="protest-header-container">
         <div class="protest-header">
           <h1>{{{ $protest->mission }}}</h1>
-          <h3>{{{ $protest->type }}}</h3>
+          <h3>{{ link_to_route('topics.show', $protest->topic->name, $protest->topic->slug) }} | {{{ $protest->type }}}</h3>
           <h4 class="time">{{{ $protest->when_date }}} {{{ $protest->when_time ? date('G:i:s e', strtotime($protest->when_time)) : null }}}</h4>
           @if($protest->address || $protest->city || $protest->state)
             <h4>
