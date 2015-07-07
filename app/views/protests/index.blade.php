@@ -9,10 +9,10 @@
     <div class="col-md-8" ng-app="protestApp" ng-controller="protestsController">
       <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active">
-          <a id="global-tab" href="#global" aria-controls="global" role="tab" data-toggle="tab" ng-click="getGlobal('trending'); setPath('global/trending');">Global Protests</a>
+          <a id="global-tab" href="#global" aria-controls="global" role="tab" data-toggle="tab" ng-click="changeTab('global')">Global Protests</a>
         </li>
         <li role="presentation">
-          <a id="local-tab" href="#local" aria-controls="local" role="tab" data-toggle="tab" ng-click="getLocal('trending'); setPath('local/trending');">Nearby Protests</a>
+          <a id="local-tab" href="#local" aria-controls="local" role="tab" data-toggle="tab" ng-click="changeTab('local')">Nearby Protests</a>
         </li>
       </ul>
       <div class="tab-content" ng-hide="loading">

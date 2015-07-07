@@ -3,10 +3,10 @@
     <div class="col-xs-12">
       <ul class="nav nav-pills sort-menu">
           <li role="presentation" ng-class="getClass('/local/trending')">
-            <a href="#local/trending" ng-click="getLocal('trending')">Trending</a>
+            <a href="#local/trending" ng-click="changeTab('local')">Trending</a>
           </li>
           <li role="presentation" ng-class="getClass('/local/newest')">
-            <a href="#local/newest" ng-click="getLocal('newest')">Most Recent</a>
+            <a href="#local/newest" ng-click="changeTab('local', 'newest')">Most Recent</a>
           </li>
       </ul>
     </div>
@@ -62,7 +62,7 @@
       </div>
     </div>
   </div>
-  <ul class="nav" ng-show="data.local.length > 2">
-    <li><a class="btn btn-default view-more" href="#">View More...</a></li>
+  <ul class="nav" ng-show="data.local.length > 9">
+    <li><a class="btn btn-default view-more" href="" ng-click="loadMore('local')">View More...</a></li>
   </ul>
 </div>

@@ -7,6 +7,7 @@ angular.module('protestMainCtrl', [])
     $scope.badLocation = true;
     $scope.noResults = true;
     $scope.url = window.apiUrl;
+    $scope.offset = 0;
 
     $scope.submitLocation = function() {
       $scope.loading = true;
@@ -37,15 +38,15 @@ angular.module('protestMainCtrl', [])
         });
     }
 
-    $scope.getGlobal = function(sort) {
-      var url = $scope.url + 'global=true&glob_limit=10&sort=' + sort;
-      $scope.resetIt();
-      Protest.get(url).success($scope.populate);
+    $scope.getGlobal = function(callback) {
+      callback = callback || $scope.populate;
+      var url = $scope.url + 'global=true&glob_limit=10&glob_offset=' + $scope.offset + '&sort=' + $scope.sort;
+      Protest.get(url).success(callback);
     }
 
-    $scope.getLocal = function(sort) {
-      var url = $scope.url + 'local=true&loc_limit=10&sort=' + sort;
-      $scope.resetIt();
+    $scope.getLocal = function(callback) {
+      callback = callback || $scope.populate;
+      var url = $scope.url + 'local=true&loc_limit=10&loc_offset=' + $scope.offset + '&sort=' + $scope.sort;
 
       Location.getLocation(function(position) {
         if(position.coords) {
@@ -58,9 +59,28 @@ angular.module('protestMainCtrl', [])
         if ($scope.lat && $scope.lon)
           url += '&lat=' + $scope.lat + '&lon=' + $scope.lon;
 
-        Protest.get(url).success($scope.populate);
+        Protest.get(url).success(callback);
       });
 
+    }
+
+    $scope.changeTab = function(type, sort) {
+      $scope.sort = sort || 'trending';
+      $scope.resetIt();
+      type == 'local' ? $scope.getLocal() : $scope.getGlobal();
+      $scope.setPath(type + '/' + $scope.sort);
+    }
+
+    $scope.loadMore = function(type) {
+      $scope.offset += 10;
+      switch (type) {
+        case 'local':
+          $scope.getLocal($scope.paginate);
+          break;
+        case 'global':
+          $scope.getGlobal($scope.paginate);
+          break;
+      }
     }
 
     $scope.getClass = function(page) {
@@ -77,7 +97,16 @@ angular.module('protestMainCtrl', [])
       $scope.badLocation = data.meta.badLocation;
     }
 
+    $scope.paginate = function(data) {
+      var protests = data.protests;
+      if (protests.global)
+        $scope.data.global.push.apply($scope.data.global, protests.global);
+      if (protests.local)
+        $scope.data.local.push.apply($scope.data.local, protests.local);
+    }
+
     $scope.resetIt = function() {
+      $scope.offset = 0;
       $scope.loading = true;
       $scope.error = false;
     }
@@ -88,22 +117,23 @@ angular.module('protestMainCtrl', [])
 
     $scope.init = function() {
       var type = $location.path().split('/')[1];
-      var sort = $location.path().split('/')[2];
-      if (type && sort) {
+      $scope.sort = $location.path().split('/')[2];
+      if (type && $scope.sort) {
         switch(type) {
           case 'global':
             $('#global-tab').tab('show');
-            $scope.getGlobal(sort);
+            $scope.getGlobal();
           break;
 
           case 'local':
             $('#local-tab').tab('show');
-            $scope.getLocal(sort);
+            $scope.getLocal();
           break;
         }
       }
       else {
-        $scope.getGlobal('trending');
+        $scope.sort = 'trending';
+        $scope.getGlobal();
         $scope.setPath('global/trending');
       }
     }

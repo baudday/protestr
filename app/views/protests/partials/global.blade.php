@@ -3,10 +3,10 @@
     <div class="col-xs-12">
       <ul class="nav nav-pills sort-menu">
           <li role="presentation" ng-class="getClass('/global/trending')">
-            <a href="#global/trending" ng-click="getGlobal('trending')">Trending</a>
+            <a href="#global/trending" ng-click="changeTab('global')">Trending</a>
           </li>
           <li role="presentation" ng-class="getClass('/global/newest')">
-            <a href="#global/newest" ng-click="getGlobal('newest')">Most Recent</a>
+            <a href="#global/newest" ng-click="changeTab('global', 'newest')">Most Recent</a>
           </li>
       </ul>
     </div>
@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-  <ul class="nav" ng-show="data.global.length > 2">
-    <li><a class="btn btn-default view-more" href="#">View More...</a></li>
+  <ul class="nav" ng-show="data.global.length > 9">
+    <li><a class="btn btn-default view-more" href="" ng-click="loadMore('global')">View More...</a></li>
   </ul>
 </div>
