@@ -1,8 +1,7 @@
 /bootstrap/compiled.php
 /vendor
 /public/packages/*
-.env.*.php
-.env.php
+.env*
 .DS_Store
 Thumbs.db
 

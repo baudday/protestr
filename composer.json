@@ -9,7 +9,8 @@
 		"components/jquery": "*",
 		"twbs/bootstrap": "*",
 		"geoip2/geoip2": "~2.0",
-		"league/commonmark": "^0.8.0"
+		"league/commonmark": "^0.8.0",
+		"vlucas/phpdotenv": "^2.0"
 	},
 	"autoload": {
 		"classmap": [
