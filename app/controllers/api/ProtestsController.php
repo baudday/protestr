@@ -80,7 +80,7 @@ class ProtestsController extends \BaseController {
 			else {
 				try {
 					$ip = \App::environment() == 'local' ? '68.38.23.38' : \Request::getClientIp();
-					$reader = new Reader('/usr/local/share/GeoIP/GeoLite2-City.mmdb');
+					$reader = new Reader(base_path() . '/GeoIP/GeoLite2-City.mmdb');
 					$row = $reader->city($ip);
 					$lat = $row->location->latitude;
 					$lon = $row->location->longitude;
