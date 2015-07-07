@@ -60,6 +60,17 @@
           </p>
         </div>
       </div>
+
+      <div class="row" ng-show="data.local.length < 10 && data.local.length > 0">
+        <div class="col-md-12" style="text-align:center;">
+          <hr>
+          <h2>
+            <strong>That's all folks!</strong>
+            <br />
+            {{ link_to_route('protests.create', 'start your own protest') }}
+          </h2>
+        </div>
+      </div>
     </div>
   </div>
   <ul class="nav" ng-show="data.local.length > 9">
