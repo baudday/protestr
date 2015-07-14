@@ -37,6 +37,9 @@
                 <h1>pre-register</h1>
                 {{ Form::open( ['route' => 'store'] ) }}
 
+                  {{ Form::hidden('u', '89e32eb621b69be47df68487a') }}
+                  {{ Form::hidden('id', '2f88e77764') }}
+
                   <div class="form-group @if($errors->first('email')) has-error has-feedback @endif">
                     {{ Form::label('email', 'Email', ['class' => 'control-label']) }}
                     {{ Form::email('email', null, ['class' => 'form-control', 'tabindex' => '1', 'placeholder' => 'Email']) }}

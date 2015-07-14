@@ -35,7 +35,7 @@ class SplashController extends \BaseController {
 
 		User::create([
 			'username' => $data['username'],
-			'email' => $data['emai'],
+			'email' => $data['email'],
 			'password' => $data['password']
 		]);
 
