@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>protestr</title>
+    <link rel="shortcut icon" href="{{ asset('img/favicon.png') }}">
     <link href='http://fonts.googleapis.com/css?family=Lobster|Open+Sans:400,300' rel='stylesheet' type='text/css'>
     {{ HTML::style('packages/bootstrap/css/bootstrap.min.css')}}
     {{ HTML::style('css/earlysignup.css') }}
