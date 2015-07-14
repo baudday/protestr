@@ -1,15 +1,15 @@
 <?php
 
-use Protestr\Forms\Splash;
+use Protestr\Forms\SignUp;
 
 class SplashController extends \BaseController {
 
-	protected $splashForm;
+	protected $signUpForm;
 
-	public function __construct(Splash $splashForm)
+	public function __construct(SignUp $signUpForm)
 	{
 		$this->beforeFilter('csrf', ['on' => 'post']);
-		$this->splashForm = $splashForm;
+		$this->signUpForm = $signUpForm;
 	}
 
 	/**
@@ -19,7 +19,7 @@ class SplashController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.splash');
+		return View::make('pages.earlysignup');
 	}
 
 
@@ -30,8 +30,14 @@ class SplashController extends \BaseController {
 	 */
 	public function store()
 	{
-		$data = $this->splashForm->sanitize(Input::all());
-		$this->splashForm->validate($data);
+		$data = $this->signUpForm->sanitize(Input::all());
+		$this->signUpForm->validate($data);
+
+		User::create([
+			'username' => $data['username'],
+			'email' => $data['emai'],
+			'password' => $data['password']
+		]);
 
 		$mcUrl = 'http://protestr.us9.list-manage1.com/subscribe/post';
 		$mcData = [
@@ -67,9 +73,9 @@ class SplashController extends \BaseController {
 	{
 		$message = [
 			'class' => 'success',
-			'message' => '<strong>Almost finished!</strong> To confirm your subscription, please click the link in the email we just sent you.'
+			'message' => '<strong>Almost finished!</strong> To confirm your registration, please click the link in the email we just sent you.'
 		];
-		return View::make('pages.splash', compact('message'));
+		return View::make('pages.earlysignup', compact('message'));
 	}
 
 }

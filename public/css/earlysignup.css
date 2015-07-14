@@ -1,0 +1,100 @@
+html, body {
+    font-family: 'Open Sans', 'sans-serif';
+    font-weight: lighter;
+    font-size: 100%;
+    background: #f8f8f8;
+    color: #333;
+}
+
+.body h1, .body h2, .body h3, .body h4, .body h5 {
+    /*font-weight: lighter;*/
+    color: #a94442;
+}
+
+.body strong {
+    color: #a94442;
+}
+
+.banner {
+    background-color: #cecece;
+    background: url('../img/banner.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    min-height: 600px;
+    padding-bottom: 60px;
+    color: white;
+}
+
+.banner h1 {
+    font-weight: lighter;
+}
+
+.logo {
+    font-family: 'Lobster';
+    font-size: 500%;
+}
+
+.motto {
+    font-size: 90%;
+}
+
+.social {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.social img {
+  /*width: 51px;*/
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.btn, .btn:hover, .btn:focus, .btn:active {
+    font-weight: lighter;
+    border: none;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: #a94442;
+}
+
+#submit_signup {
+    margin-top: 20px;
+}
+
+.body {
+    line-height: 1.6;
+    margin-bottom: 60px;
+    margin-top: 40px;
+}
+
+.heading-container {
+    margin-bottom: 50px;
+}
+
+.heading {
+    color: #a94442;
+    font-weight: bold;
+    text-align: center;
+}
+
+.thumbnail {
+    border: none;
+    background: #f8f8f8;
+}
+
+.thumbnail img {
+    width: 80%;
+}
+
+.caption h3 {
+    font-weight: bolder;
+    text-align: center;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 50px;
+}
