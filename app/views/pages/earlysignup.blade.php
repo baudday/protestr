@@ -155,10 +155,7 @@
           and should be, a big deal. We understand that, and do not take
           this point lightly. That's why we try to collect as little of your
           personal information as possible. Upon registration, we only ask
-          for an email address and a username. With that, we still feel it
-          important to note: <strong>Protestr will never, under any
-          circumstances, sell, hand over, or divulge your information to any
-          public, private, or government entity.</strong></p>
+          for an email address and a username.</p>
           <hr>
       </div>
     </div>
