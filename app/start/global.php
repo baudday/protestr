@@ -89,3 +89,6 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+$dotenv = new Dotenv\Dotenv(base_path());
+$dotenv->load();

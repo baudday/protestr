@@ -7,7 +7,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"components/jquery": "*",
-		"twbs/bootstrap": "*"
+		"twbs/bootstrap": "*",
+		"vlucas/phpdotenv": "^2.0"
 	},
 	"autoload": {
 		"classmap": [
